@@ -25,13 +25,13 @@
 #include <utility>
 #include <vector>
 
+#include "Size.hpp"
+
 using namespace cursed;
 
-List::List() : win(nullptr, &delwin), pos(0), top(0)
+List::List() : win(nullptr, &delwin), pos(0), top(0), height(0)
 {
-    int screenCols;
-    getmaxyx(stdscr, height, screenCols);
-    win.reset(newwin(height, screenCols, 0, 0));
+    win.reset(newwin(0, 0, 0, 0));
     if (win == nullptr) {
         throw std::runtime_error("Failed to create window for a list");
     }
@@ -46,11 +46,10 @@ List::setItems(std::vector<std::wstring> newItems)
 }
 
 void
-List::resize()
+List::resize(Size newSize)
 {
-    int screenCols;
-    getmaxyx(stdscr, height, screenCols);
-    wresize(win.get(), height, screenCols);
+    wresize(win.get(), newSize.lines, newSize.cols);
+    height = newSize.lines;
 }
 
 void

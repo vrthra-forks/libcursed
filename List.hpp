@@ -27,6 +27,8 @@
 
 namespace cursed {
 
+class Size;
+
 // A scrollable list of textual items.
 class List
 {
@@ -45,7 +47,7 @@ public:
     void setItems(std::vector<std::wstring> newItems);
 
     // Performs size update.
-    void resize();
+    void resize(Size newSize);
     // Draws contents on the screen.
     void draw();
 
