@@ -46,13 +46,6 @@ List::setItems(std::vector<std::wstring> newItems)
 }
 
 void
-List::resize(Size newSize)
-{
-    wresize(win.get(), newSize.lines, newSize.cols);
-    height = newSize.lines;
-}
-
-void
 List::draw()
 {
     if (items.empty()) {
@@ -125,4 +118,18 @@ std::wstring
 List::getCurrent() const
 {
     return (items.empty() ? std::wstring() : items[pos]);
+}
+
+int
+List::desiredHeight()
+{
+    return -1;
+}
+
+void
+List::placed(Pos newPos, Size newSize)
+{
+    wresize(win.get(), newSize.lines, newSize.cols);
+    mvwin(win.get(), newPos.y, newPos.x);
+    height = newSize.lines;
 }

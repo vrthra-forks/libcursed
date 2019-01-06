@@ -25,12 +25,14 @@
 #include <string>
 #include <vector>
 
+#include "Widget.hpp"
+
 namespace cursed {
 
 class Size;
 
 // A scrollable list of textual items.
-class List
+class List : public Widget
 {
 public:
     // Constructs an empty list that takes up all screen.  Can throw
@@ -46,10 +48,8 @@ public:
     // Assigns list of items.
     void setItems(std::vector<std::wstring> newItems);
 
-    // Performs size update.
-    void resize(Size newSize);
     // Draws contents on the screen.
-    void draw();
+    virtual void draw() override;
 
     // Puts cursor on the first element.
     void moveToFirst();
@@ -64,6 +64,15 @@ public:
     // Returns value of the element under the cursor or an empty string for
     // empty list.
     std::wstring getCurrent() const;
+
+private:
+    // Retrieves vertical size policy.
+    // Positive number or zero means exactly that much.
+    // Negative number means at least that much in magnitude.
+    virtual int desiredHeight() override;
+
+    // Notifies widget of new position and size.
+    virtual void placed(Pos newPos, Size newSize) override;
 
 private:
     std::unique_ptr<WINDOW, decltype(&delwin)> win; // Window object.
