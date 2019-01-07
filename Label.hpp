@@ -16,52 +16,36 @@
 // You should have received a copy of the GNU General Public License
 // along with libcursed.  If not, see <https://www.gnu.org/licenses/>.
 
-#ifndef LIBCURSED__LIST_HPP__
-#define LIBCURSED__LIST_HPP__
+#ifndef LIBCURSED__LABEL_HPP__
+#define LIBCURSED__LABEL_HPP__
 
 #include <curses.h>
 
 #include <memory>
 #include <string>
-#include <vector>
 
 #include "Widget.hpp"
 
 namespace cursed {
 
-// A scrollable list of textual items.
-class List : public Widget
+// Static text field.
+class Label : public Widget
 {
 public:
-    // Constructs an empty list that takes up all screen.  Can throw
-    // `std::runtime_error`.
-    explicit List();
+    // Constructs a label.  Can throw `std::runtime_error`.
+    explicit Label(std::wstring initText = {});
 
-    List(const List &rhs) = delete;
-    List(List &&rhs) = delete;
-    List & operator=(const List &rhs) = delete;
-    List & operator=(List &&rhs) = delete;
+    Label(const Label &rhs) = delete;
+    Label(Label &&rhs) = delete;
+    Label & operator=(const Label &rhs) = delete;
+    Label & operator=(Label &&rhs) = delete;
 
 public:
-    // Assigns list of items.
-    void setItems(std::vector<std::wstring> newItems);
+    // Updates text of the label.
+    void setText(std::wstring newText);
 
     // Draws contents on the screen.
     virtual void draw() override;
-
-    // Puts cursor on the first element.
-    void moveToFirst();
-    // Puts cursor on the last element.
-    void moveToLast();
-
-    // Moves cursor one element down.
-    void moveDown();
-    // Moves cursor one element up.
-    void moveUp();
-
-    // Returns value of the element under the cursor or an empty string for
-    // empty list.
-    std::wstring getCurrent() const;
 
 private:
     // Retrieves vertical size policy.
@@ -74,12 +58,9 @@ private:
 
 private:
     std::unique_ptr<WINDOW, decltype(&delwin)> win; // Window object.
-    std::vector<std::wstring> items;                // List of items.
-    int pos;                                        // Current cursor position.
-    int top;                                        // First element to display.
-    int height;                                     // Screen height.
+    std::wstring text;                              // Text of the label.
 };
 
 }
 
-#endif // LIBCURSED__LIST_HPP__
+#endif // LIBCURSED__LABEL_HPP__
