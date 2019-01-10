@@ -18,9 +18,6 @@
 
 #include "List.hpp"
 
-#include <curses.h>
-
-#include <stdexcept>
 #include <string>
 #include <utility>
 #include <vector>
@@ -29,13 +26,8 @@
 
 using namespace cursed;
 
-List::List() : win(nullptr, &delwin), pos(0), top(0), height(0)
-{
-    win.reset(newwin(0, 0, 0, 0));
-    if (win == nullptr) {
-        throw std::runtime_error("Failed to create window for a list");
-    }
-}
+List::List() : pos(0), top(0), height(0)
+{ }
 
 void
 List::setItems(std::vector<std::wstring> newItems)
@@ -60,7 +52,7 @@ List::draw()
         top = pos - (height - 1);
     }
 
-    werase(win.get());
+    werase(win);
     int line = 0;
     for (int i = top; i < top + height; ++i) {
         if (i == static_cast<int>(items.size())) {
@@ -70,20 +62,20 @@ List::draw()
         const std::wstring &item = items[i];
 
         if (i == pos) {
-            wattron(win.get(), A_REVERSE);
+            wattron(win, guts::Attribs::Reversed);
         }
-        wmove(win.get(), line, 0);
-        wclrtoeol(win.get());
-        wprintw(win.get(), "%ls", item.c_str());
+        wmove(win, line, 0);
+        wclrtoeol(win);
+        wprintw(win, "%ls", item.c_str());
         if (i == pos) {
-            wattroff(win.get(), A_REVERSE);
+            wattroff(win, guts::Attribs::Reversed);
         }
 
         if (++line == height) {
             break;
         }
     }
-    wrefresh(win.get());
+    wrefresh(win);
 }
 
 void
@@ -129,7 +121,6 @@ List::desiredHeight()
 void
 List::placed(Pos newPos, Size newSize)
 {
-    wresize(win.get(), newSize.lines, newSize.cols);
-    mvwin(win.get(), newPos.y, newPos.x);
+    win.place(newPos, newSize);
     height = newSize.lines;
 }

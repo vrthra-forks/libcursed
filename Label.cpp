@@ -18,21 +18,13 @@
 
 #include "Label.hpp"
 
-#include <curses.h>
-
 #include <string>
 #include <utility>
 
 using namespace cursed;
 
-Label::Label(std::wstring initText)
-    : win(nullptr, &delwin), text(std::move(initText))
-{
-    win.reset(newwin(0, 0, 0, 0));
-    if (win == nullptr) {
-        throw std::runtime_error("Failed to create window for a label");
-    }
-}
+Label::Label(std::wstring initText) : text(std::move(initText))
+{ }
 
 void
 Label::setText(std::wstring newText)
@@ -43,10 +35,9 @@ Label::setText(std::wstring newText)
 void
 Label::draw()
 {
-    werase(win.get());
-    wmove(win.get(), 0, 0);
-    wprintw(win.get(), "%ls", text.c_str());
-    wrefresh(win.get());
+    werase(win);
+    mvwprintw(win, 0, 0, "%ls", text.c_str());
+    wrefresh(win);
 }
 
 int
@@ -58,6 +49,5 @@ Label::desiredHeight()
 void
 Label::placed(Pos newPos, Size newSize)
 {
-    wresize(win.get(), newSize.lines, newSize.cols);
-    mvwin(win.get(), newPos.y, newPos.x);
+    win.place(newPos, newSize);
 }

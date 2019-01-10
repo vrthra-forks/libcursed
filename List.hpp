@@ -19,13 +19,11 @@
 #ifndef LIBCURSED__LIST_HPP__
 #define LIBCURSED__LIST_HPP__
 
-#include <curses.h>
-
-#include <memory>
 #include <string>
 #include <vector>
 
 #include "Widget.hpp"
+#include "Window.hpp"
 
 namespace cursed {
 
@@ -73,11 +71,11 @@ private:
     virtual void placed(Pos newPos, Size newSize) override;
 
 private:
-    std::unique_ptr<WINDOW, decltype(&delwin)> win; // Window object.
-    std::vector<std::wstring> items;                // List of items.
-    int pos;                                        // Current cursor position.
-    int top;                                        // First element to display.
-    int height;                                     // Screen height.
+    guts::Window win;                // Window object.
+    std::vector<std::wstring> items; // List of items.
+    int pos;                         // Current cursor position.
+    int top;                         // First element to display.
+    int height;                      // Screen height.
 };
 
 }

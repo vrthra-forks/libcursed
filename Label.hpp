@@ -19,12 +19,10 @@
 #ifndef LIBCURSED__LABEL_HPP__
 #define LIBCURSED__LABEL_HPP__
 
-#include <curses.h>
-
-#include <memory>
 #include <string>
 
 #include "Widget.hpp"
+#include "Window.hpp"
 
 namespace cursed {
 
@@ -57,8 +55,8 @@ private:
     virtual void placed(Pos newPos, Size newSize) override;
 
 private:
-    std::unique_ptr<WINDOW, decltype(&delwin)> win; // Window object.
-    std::wstring text;                              // Text of the label.
+    guts::Window win;  // Window object.
+    std::wstring text; // Text of the label.
 };
 
 }
