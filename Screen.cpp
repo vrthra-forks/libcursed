@@ -21,11 +21,13 @@
 #include <curses.h>
 
 #include "Size.hpp"
+#include "Widget.hpp"
 
 using namespace cursed;
 
-Size
-Screen::getSize() const
+// Retrieves size of the screen.
+static inline Size
+getSize()
 {
     Size size;
     getmaxyx(stdscr, size.lines, size.cols);
@@ -33,7 +35,18 @@ Screen::getSize() const
 }
 
 void
-Screen::flush()
+Screen::resize()
 {
-    doupdate();
+    if (mainWidget != nullptr) {
+        mainWidget->place(Pos(), getSize());
+    }
+}
+
+void
+Screen::draw()
+{
+    if (mainWidget != nullptr) {
+        mainWidget->draw();
+        doupdate();
+    }
 }

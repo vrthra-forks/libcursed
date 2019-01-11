@@ -21,17 +21,24 @@
 
 namespace cursed {
 
-class Size;
+class Widget;
 
 // Provides information about the whole screen.
 class Screen
 {
 public:
-    // Retrieves size of the screen.
-    Size getSize() const;
+    // Sets widget that takes up the whole screen.
+    void setMainWidget(Widget *w)
+    { mainWidget = w; }
 
-    // Makes screen updates visible on physical screen.
-    void flush();
+    // Handles screen resizing.
+    void resize();
+
+    // Draws main widget and makes screen updates visible on physical screen.
+    void draw();
+
+private:
+    Widget *mainWidget = nullptr;
 };
 
 }
