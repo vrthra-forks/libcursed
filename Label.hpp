@@ -42,7 +42,7 @@ public:
     // Updates text of the label.
     void setText(std::wstring newText);
 
-    // Draws contents on the screen.
+    // Updates state of this widget to be published on the screen.
     virtual void draw() override;
 
 private:

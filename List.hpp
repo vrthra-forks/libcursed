@@ -31,8 +31,7 @@ namespace cursed {
 class List : public Widget
 {
 public:
-    // Constructs an empty list that takes up all screen.  Can throw
-    // `std::runtime_error`.
+    // Constructs an empty list.  Can throw `std::runtime_error`.
     explicit List();
 
     List(const List &rhs) = delete;
@@ -44,7 +43,7 @@ public:
     // Assigns list of items.
     void setItems(std::vector<std::wstring> newItems);
 
-    // Draws contents on the screen.
+    // Updates state of this widget to be published on the screen.
     virtual void draw() override;
 
     // Puts cursor on the first element.

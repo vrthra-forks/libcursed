@@ -66,9 +66,9 @@ void
 }
 
 void
-(guts::wrefresh)(Window &win)
+(guts::wnoutrefresh)(Window &win)
 {
-    wrefresh(w(win.raw()));
+    wnoutrefresh(w(win.raw()));
 }
 
 void

@@ -35,7 +35,7 @@ public:
     // Performs position and size update.  The default just calls
     // `placed(newPos, newSize)`.
     virtual void place(Pos newPos, Size newSize);
-    // Draws contents on the screen.
+    // Updates state of this widget to be published on the screen.
     virtual void draw() = 0;
 
     // Retrieves vertical size policy.

@@ -55,8 +55,8 @@ private:
 
 // Clears window.
 void werase(Window &win);
-// Publishes changes on the screen.
-void wrefresh(Window &win);
+// Publishes changes to be displayed on the next screen update.
+void wnoutrefresh(Window &win);
 
 // Enables an attribute.
 void wattron(Window &win, Attribs attrs);

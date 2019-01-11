@@ -36,7 +36,7 @@ public:
 public:
     // Performs position and size update.
     virtual void place(Pos newPos, Size newSize) override;
-    // Draws contents on the screen.
+    // Updates state of this widget to be published on the screen.
     virtual void draw() override;
 
 private:

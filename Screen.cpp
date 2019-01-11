@@ -31,3 +31,9 @@ Screen::getSize() const
     getmaxyx(stdscr, size.lines, size.cols);
     return size;
 }
+
+void
+Screen::flush()
+{
+    doupdate();
+}

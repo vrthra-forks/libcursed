@@ -29,6 +29,9 @@ class Screen
 public:
     // Retrieves size of the screen.
     Size getSize() const;
+
+    // Makes screen updates visible on physical screen.
+    void flush();
 };
 
 }

@@ -37,7 +37,7 @@ Label::draw()
 {
     werase(win);
     mvwprintw(win, 0, 0, "%ls", text.c_str());
-    wrefresh(win);
+    wnoutrefresh(win);
 }
 
 int

@@ -75,7 +75,7 @@ List::draw()
             break;
         }
     }
-    wrefresh(win);
+    wnoutrefresh(win);
 }
 
 void
