@@ -66,7 +66,7 @@ List::draw()
         }
         wmove(win, line, 0);
         wclrtoeol(win);
-        wprintw(win, "%ls", item.c_str());
+        wprintw(win, " %ls ", item.c_str());
         if (i == pos) {
             wattroff(win, guts::Attribs::Reversed);
         }
