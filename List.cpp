@@ -18,6 +18,8 @@
 
 #include "List.hpp"
 
+#include <cassert>
+
 #include <string>
 #include <utility>
 #include <vector>
@@ -25,6 +27,20 @@
 #include "Size.hpp"
 
 using namespace cursed;
+
+// Computes number of digits in a positive number (including zero).
+static inline int
+countWidth(int n)
+{
+    assert(n >= 0 && "Argument must be >= 0.");
+
+    int width = 0;
+    do {
+        n /= 10;
+        ++width;
+    } while (n > 0);
+    return width;
+}
 
 List::List() : pos(0), top(0), height(0)
 { }
@@ -52,6 +68,8 @@ List::draw()
         top = pos - (height - 1);
     }
 
+    int lineNumWidth = countWidth(items.size());
+
     werase(win);
     int line = 0;
     for (int i = top; i < top + height; ++i) {
@@ -66,7 +84,7 @@ List::draw()
         }
         wmove(win, line, 0);
         wclrtoeol(win);
-        wprintw(win, " %ls ", item.c_str());
+        wprintw(win, " %*d: %ls ", lineNumWidth, i + 1, item.c_str());
         if (i == pos) {
             wattroff(win, guts::Attribs::Reversed);
         }
