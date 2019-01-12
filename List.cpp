@@ -109,18 +109,22 @@ List::moveToLast()
 }
 
 void
-List::moveDown()
+List::moveDown(int by)
 {
-    if (pos < static_cast<int>(items.size()) - 1) {
-        ++pos;
+    assert(by > 0 && "Argument must be > 0.");
+    pos += by;
+    if (pos > static_cast<int>(items.size()) - 1) {
+        pos = static_cast<int>(items.size()) - 1;
     }
 }
 
 void
-List::moveUp()
+List::moveUp(int by)
 {
-    if (pos > 0) {
-        --pos;
+    assert(by > 0 && "Argument must be > 0.");
+    pos -= by;
+    if (pos < 0) {
+        pos = 0;
     }
 }
 

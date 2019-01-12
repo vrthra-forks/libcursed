@@ -51,10 +51,10 @@ public:
     // Puts cursor on the last element.
     void moveToLast();
 
-    // Moves cursor one element down.
-    void moveDown();
-    // Moves cursor one element up.
-    void moveUp();
+    // Moves cursor `by` elements down.
+    void moveDown(int by = 1);
+    // Moves cursor `by` elements up.
+    void moveUp(int by = 1);
 
     // Moves cursor to the specified position (incorrect value is turned into
     // closes bound).
