@@ -124,6 +124,19 @@ List::moveUp()
     }
 }
 
+void
+List::moveToPos(int newPos)
+{
+    --newPos;
+    if (newPos < 0) {
+        newPos = 0;
+    }
+    if (newPos >= static_cast<int>(items.size()) - 1) {
+        newPos = items.size() - 1;
+    }
+    pos = newPos;
+}
+
 std::wstring
 List::getCurrent() const
 {

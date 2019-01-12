@@ -56,6 +56,10 @@ public:
     // Moves cursor one element up.
     void moveUp();
 
+    // Moves cursor to the specified position (incorrect value is turned into
+    // closes bound).
+    void moveToPos(int newPos);
+
     // Returns value of the element under the cursor or an empty string for
     // empty list.
     std::wstring getCurrent() const;
