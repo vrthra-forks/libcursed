@@ -35,6 +35,13 @@ getSize()
 }
 
 void
+Screen::setMainWidget(Widget *w)
+{
+    mainWidget = w;
+    resize();
+}
+
+void
 Screen::resize()
 {
     if (mainWidget != nullptr) {

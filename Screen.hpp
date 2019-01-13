@@ -27,9 +27,9 @@ class Widget;
 class Screen
 {
 public:
-    // Sets widget that takes up the whole screen.
-    void setMainWidget(Widget *w)
-    { mainWidget = w; }
+    // Sets widget and stretches it over the whole screen.  `w` can be
+    // `nullptr`.
+    void setMainWidget(Widget *w);
 
     // Handles screen resizing.
     void resize();
@@ -38,7 +38,7 @@ public:
     void draw();
 
 private:
-    Widget *mainWidget = nullptr;
+    Widget *mainWidget = nullptr; // Root of all currently displayed widgets.
 };
 
 }
