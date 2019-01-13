@@ -72,25 +72,19 @@ List::draw()
 
     werase(win);
     int line = 0;
-    for (int i = top; i < top + height; ++i) {
+    for (int i = top; i < top + height; ++i, ++line) {
         if (i == static_cast<int>(items.size())) {
             break;
         }
-
-        const std::wstring &item = items[i];
 
         if (i == pos) {
             wattron(win, guts::Attribs::Reversed);
         }
         wmove(win, line, 0);
         wclrtoeol(win);
-        wprintw(win, " %*d: %ls ", lineNumWidth, i + 1, item.c_str());
+        wprintw(win, " %*d: %ls ", lineNumWidth, i + 1, items[i].c_str());
         if (i == pos) {
             wattroff(win, guts::Attribs::Reversed);
-        }
-
-        if (++line == height) {
-            break;
         }
     }
     wnoutrefresh(win);
