@@ -20,6 +20,10 @@
 
 #include <curses.h>
 
+#include <stdexcept>
+
+#include "Window.hpp"
+
 using namespace cursed;
 
 InputElement::InputElement(int status, std::wint_t code)
@@ -55,6 +59,11 @@ InputElement::operator==(wchar_t wch) const
     return (status == OK && static_cast<wchar_t>(*this) == wch);
 }
 
+Input::Input()
+{
+    wtimeout(peekWin, 0);
+}
+
 InputElement
 Input::read()
 {
@@ -68,5 +77,20 @@ Input::read()
         refresh();
     }
 
+    return ie;
+}
+
+InputElement
+Input::peek()
+{
+    std::wint_t wch;
+    int status = wget_wch(peekWin, &wch);
+    InputElement ie(status, wch);
+
+    if (!ie.isEndOfInput() && unget_wch(ie.code) == ERR) {
+        // In practice this shouldn't happen.  If unget buffer was full, we read
+        // from it and just return back to it.
+        throw std::runtime_error("Can't unget input element after peek");
+    }
     return ie;
 }

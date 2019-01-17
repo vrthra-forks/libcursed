@@ -21,6 +21,8 @@
 
 #include <cwctype>
 
+#include "Window.hpp"
+
 namespace cursed {
 
 // Describes single input event.
@@ -57,7 +59,8 @@ private:
 class Input
 {
 public:
-    Input() = default;
+    // Initializes state.
+    Input();
 
     Input(const Input &rhs) = delete;
     Input(Input &&rhs) = delete;
@@ -67,6 +70,12 @@ public:
 public:
     // Retrieves single input event.
     InputElement read();
+    // Peeks on a next input event without consuming it.  Might throw
+    // `std::runtime_error` if ungetting input fails.
+    InputElement peek();
+
+private:
+    guts::Window peekWin; // Window for peeking (needs zero timeout).
 };
 
 }
