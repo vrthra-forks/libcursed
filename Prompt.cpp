@@ -16,56 +16,40 @@
 // You should have received a copy of the GNU General Public License
 // along with libcursed.  If not, see <https://www.gnu.org/licenses/>.
 
-#include "Screen.hpp"
+#include "Prompt.hpp"
 
-#include <curses.h>
-
-#include "Size.hpp"
-#include "Widget.hpp"
+#include <string>
+#include <utility>
 
 using namespace cursed;
 
-// Retrieves size of the screen.
-static inline Size
-getSize()
+Prompt::Prompt() : pos(text.size())
+{ }
+
+void
+Prompt::setText(std::wstring newText, int newPos)
 {
-    Size size;
-    getmaxyx(stdscr, size.lines, size.cols);
-    return size;
+    text = std::move(newText);
+    pos = newPos;
 }
 
 void
-Screen::setMainWidget(Widget *w)
+Prompt::draw()
 {
-    mainWidget = w;
-    resize();
+    werase(win);
+    mvwprintw(win, 0, 0, "%ls", text.c_str());
+    wmove(win, 0, pos);
+    wnoutrefresh(win);
+}
+
+int
+Prompt::desiredHeight()
+{
+    return 1;
 }
 
 void
-Screen::resize()
+Prompt::placed(Pos newPos, Size newSize)
 {
-    if (mainWidget != nullptr) {
-        mainWidget->place(Pos(), getSize());
-    }
-}
-
-void
-Screen::draw()
-{
-    if (mainWidget != nullptr) {
-        mainWidget->draw();
-        doupdate();
-    }
-}
-
-void
-Screen::showCursor()
-{
-    curs_set(1);
-}
-
-void
-Screen::hideCursor()
-{
-    curs_set(0);
+    win.place(newPos, newSize);
 }

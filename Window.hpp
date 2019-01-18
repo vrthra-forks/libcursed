@@ -19,6 +19,8 @@
 #ifndef LIBCURSED__WINDOW_HPP__
 #define LIBCURSED__WINDOW_HPP__
 
+#include <cwctype>
+
 namespace cursed {
 
 class Pos;
@@ -62,6 +64,11 @@ private:
 void (werase)(Window &win);
 // Publishes changes to be displayed on the next screen update.
 void (wnoutrefresh)(Window &win);
+
+// Sets time to wait for input on a window (negative means block).
+void (wtimeout)(Window &win, int delay);
+// Reads input on a window.
+int (wget_wch)(Window &win, std::wint_t *wch);
 
 // Enables an attribute.
 void (wattron)(Window &win, Attribs attrs);

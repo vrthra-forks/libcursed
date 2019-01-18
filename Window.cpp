@@ -72,6 +72,18 @@ void
 }
 
 void
+(guts::wtimeout)(Window &win, int delay)
+{
+    wtimeout(w(win.raw()), delay);
+}
+
+int
+(guts::wget_wch)(Window &win, std::wint_t *wch)
+{
+    return wget_wch(w(win.raw()), wch);
+}
+
+void
 (guts::wattron)(Window &win, Attribs attrs)
 {
     int cursesAttrs = 0;

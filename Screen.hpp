@@ -37,6 +37,11 @@ public:
     // Draws main widget and makes screen updates visible on physical screen.
     void draw();
 
+    // Makes cursor visible.
+    void showCursor();
+    // Makes cursor invisible.
+    void hideCursor();
+
 private:
     Widget *mainWidget = nullptr; // Root of all currently displayed widgets.
 };
