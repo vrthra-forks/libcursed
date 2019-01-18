@@ -41,6 +41,11 @@ public:
     // Deletes the resource.
     ~Window();
 
+    Window(const Window &rhs) = delete;
+    Window(Window &&rhs) = delete;
+    Window & operator=(const Window &rhs) = delete;
+    Window & operator=(Window &&rhs) = delete;
+
 public:
     // Retrieves window resource.
     void * raw()
