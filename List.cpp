@@ -59,6 +59,9 @@ List::draw()
     if (items.empty()) {
         top = 0;
         pos = 0;
+
+        werase(win);
+        wnoutrefresh(win);
         return;
     }
 
