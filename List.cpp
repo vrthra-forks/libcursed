@@ -50,7 +50,7 @@ List::List() : pos(0), top(0), height(0)
 }
 
 void
-List::setItems(std::vector<std::wstring> newItems)
+List::setItems(std::vector<ColorTree> newItems)
 {
     items = std::move(newItems);
     top = 0;
@@ -89,11 +89,10 @@ List::draw()
 
         std::wostringstream oss;
         oss << L' '
-            << std::setw(lineNumWidth) << i + 1 << L": " << items[i]
-            << L' ';
+            << std::setw(lineNumWidth) << i + 1 << L": ";
 
         Format primeFormat(i == pos ? currentHi : cursed::Format());
-        ColorTree colored = primeFormat(oss.str());
+        ColorTree colored = primeFormat(oss.str() + ColorTree(items[i]) + L" ");
         win.print(itemHi(std::move(colored)));
     }
     wnoutrefresh(win);
@@ -147,7 +146,16 @@ List::moveToPos(int newPos)
 std::wstring
 List::getCurrent() const
 {
-    return (items.empty() ? std::wstring() : items[pos]);
+    if (items.empty()) {
+        return std::wstring();
+    }
+
+    std::wstring current;
+    items[pos].visit([&current](const std::wstring &text,
+                                const Format &/*format*/) {
+        current += text;
+    });
+    return current;
 }
 
 int

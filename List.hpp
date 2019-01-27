@@ -42,7 +42,7 @@ public:
 
 public:
     // Assigns list of items.
-    void setItems(std::vector<std::wstring> newItems);
+    void setItems(std::vector<ColorTree> newItems);
 
     // Updates state of this widget to be published on the screen.
     virtual void draw() override;
@@ -75,13 +75,13 @@ private:
     virtual void placed(Pos newPos, Size newSize) override;
 
 private:
-    guts::Window win;                // Window object.
-    std::vector<std::wstring> items; // List of items.
-    int pos;                         // Current cursor position.
-    int top;                         // First element to display.
-    int height;                      // Screen height.
-    Format itemHi;                   // Visual style of an item.
-    Format currentHi;                // Visual style of the current item.
+    guts::Window win;             // Window object.
+    std::vector<ColorTree> items; // List of items.
+    int pos;                      // Current cursor position.
+    int top;                      // First element to display.
+    int height;                   // Screen height.
+    Format itemHi;                // Visual style of an item.
+    Format currentHi;             // Visual style of the current item.
 };
 
 }
