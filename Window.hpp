@@ -72,12 +72,6 @@ int (wget_wch)(Window &win, std::wint_t *wch);
 void (wmove)(Window &win, int y, int x);
 // Erases current line until its end.
 void (wclrtoeol)(Window &win);
-// Prints string on the window at current cursor position.
-void (wprintw)(Window &win, const char fmt[], ...)
-    __attribute__ ((format(printf, 2, 3)));
-// Prints string on the window at specified cursor position.
-void (mvwprintw)(Window &win, int y, int x, const char fmt[], ...)
-    __attribute__ ((format(printf, 4, 5)));
 
 }
 

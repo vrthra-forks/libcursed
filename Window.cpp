@@ -20,8 +20,6 @@
 
 #include <curses.h>
 
-#include <cstdarg>
-
 #include <stdexcept>
 
 #include "ColorTree.hpp"
@@ -76,7 +74,7 @@ Window::print(const ColorTree &colored)
         }
         wattrset(w(ptr), attrs);
 
-        wprintw(*this, "%ls", text.c_str());
+        wprintw(w(ptr), "%ls", text.c_str());
     });
 }
 
@@ -114,24 +112,4 @@ void
 (guts::wclrtoeol)(Window &win)
 {
     wclrtoeol(w(win.raw()));
-}
-
-void
-(guts::wprintw)(Window &win, const char fmt[], ...)
-{
-    va_list vaList;
-    va_start(vaList, fmt);
-    vwprintw(w(win.raw()), fmt, vaList);
-    va_end(vaList);
-}
-
-void
-(guts::mvwprintw)(Window &win, int y, int x, const char fmt[], ...)
-{
-    wmove(w(win.raw()), y, x);
-
-    std::va_list vaList;
-    va_start(vaList, fmt);
-    vwprintw(w(win.raw()), fmt, vaList);
-    va_end(vaList);
 }

@@ -18,16 +18,17 @@
 
 #include "Label.hpp"
 
-#include <string>
 #include <utility>
+
+#include "ColorTree.hpp"
 
 using namespace cursed;
 
-Label::Label(std::wstring initText) : text(std::move(initText))
+Label::Label(ColorTree initText) : text(std::move(initText))
 { }
 
 void
-Label::setText(std::wstring newText)
+Label::setText(ColorTree newText)
 {
     text = std::move(newText);
 }
@@ -36,7 +37,8 @@ void
 Label::draw()
 {
     werase(win);
-    mvwprintw(win, 0, 0, "%ls", text.c_str());
+    wmove(win, 0, 0);
+    win.print(text);
     wnoutrefresh(win);
 }
 

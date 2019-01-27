@@ -19,8 +19,7 @@
 #ifndef LIBCURSED__LABEL_HPP__
 #define LIBCURSED__LABEL_HPP__
 
-#include <string>
-
+#include "ColorTree.hpp"
 #include "Widget.hpp"
 #include "Window.hpp"
 
@@ -31,7 +30,7 @@ class Label : public Widget
 {
 public:
     // Constructs a label.  Can throw `std::runtime_error`.
-    explicit Label(std::wstring initText = {});
+    explicit Label(ColorTree initText = {});
 
     Label(const Label &rhs) = delete;
     Label(Label &&rhs) = delete;
@@ -40,7 +39,7 @@ public:
 
 public:
     // Updates text of the label.
-    void setText(std::wstring newText);
+    void setText(ColorTree newText);
 
     // Updates state of this widget to be published on the screen.
     virtual void draw() override;
@@ -55,8 +54,8 @@ private:
     virtual void placed(Pos newPos, Size newSize) override;
 
 private:
-    guts::Window win;  // Window object.
-    std::wstring text; // Text of the label.
+    guts::Window win; // Window object.
+    ColorTree text;   // Text of the label.
 };
 
 }
