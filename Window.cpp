@@ -105,26 +105,6 @@ int
 }
 
 void
-(guts::wattron)(Window &win, Attribs attrs)
-{
-    int cursesAttrs = 0;
-    switch (attrs) {
-        case Attribs::Reversed: cursesAttrs = A_REVERSE; break;
-    }
-    wattron(w(win.raw()), cursesAttrs);
-}
-
-void
-(guts::wattroff)(Window &win, Attribs attrs)
-{
-    int cursesAttrs = 0;
-    switch (attrs) {
-        case Attribs::Reversed: cursesAttrs = A_REVERSE; break;
-    }
-    wattroff(w(win.raw()), cursesAttrs);
-}
-
-void
 (guts::wmove)(Window &win, int y, int x)
 {
     wmove(w(win.raw()), y, x);

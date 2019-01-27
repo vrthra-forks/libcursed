@@ -60,8 +60,13 @@ public:
     bool isUnderlined() const
     { return underlined; }
 
+    // Resolves ambiguity on invoking `operator()` with a wide literal.
+    template <std::size_t N>
+    ColorTree operator()(const wchar_t (&text)[N]);
     // Applies this formatting to specified piece of text.
     ColorTree operator()(std::wstring text) const;
+    // Applies this formatting to a tree.
+    ColorTree operator()(ColorTree &&tree) const;
 
 private:
     bool bold = false;       // Whether text is bold.
@@ -109,6 +114,13 @@ private:
 ColorTree operator+(ColorTree &&lhs, ColorTree &&rhs);
 // Extends a tree by appending another branch to it.
 ColorTree & operator+=(ColorTree &lhs, ColorTree &&rhs);
+
+template <std::size_t N>
+ColorTree
+Format::operator()(const wchar_t (&text)[N])
+{
+    return (*this)(std::wstring(text, text + N));
+}
 
 }
 

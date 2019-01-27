@@ -20,6 +20,8 @@
 
 #include <cassert>
 
+#include <iomanip>
+#include <sstream>
 #include <string>
 #include <utility>
 #include <vector>
@@ -43,7 +45,9 @@ countWidth(int n)
 }
 
 List::List() : pos(0), top(0), height(0)
-{ }
+{
+    currentHi.setReversed(true);
+}
 
 void
 List::setItems(std::vector<std::wstring> newItems)
@@ -80,15 +84,17 @@ List::draw()
             break;
         }
 
-        if (i == pos) {
-            wattron(win, guts::Attribs::Reversed);
-        }
         wmove(win, line, 0);
         wclrtoeol(win);
-        wprintw(win, " %*d: %ls ", lineNumWidth, i + 1, items[i].c_str());
-        if (i == pos) {
-            wattroff(win, guts::Attribs::Reversed);
-        }
+
+        std::wostringstream oss;
+        oss << L' '
+            << std::setw(lineNumWidth) << i + 1 << L": " << items[i]
+            << L' ';
+
+        Format primeFormat(i == pos ? currentHi : cursed::Format());
+        ColorTree colored = primeFormat(oss.str());
+        win.print(itemHi(std::move(colored)));
     }
     wnoutrefresh(win);
 }

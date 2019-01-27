@@ -22,6 +22,7 @@
 #include <string>
 #include <vector>
 
+#include "ColorTree.hpp"
 #include "Widget.hpp"
 #include "Window.hpp"
 
@@ -79,6 +80,8 @@ private:
     int pos;                         // Current cursor position.
     int top;                         // First element to display.
     int height;                      // Screen height.
+    Format itemHi;                   // Visual style of an item.
+    Format currentHi;                // Visual style of the current item.
 };
 
 }

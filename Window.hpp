@@ -29,12 +29,6 @@ class Size;
 
 namespace guts {
 
-// Text attributes.
-enum class Attribs
-{
-    Reversed // Reverse background and foreground colors.
-};
-
 // Manages window resource.
 class Window
 {
@@ -74,10 +68,6 @@ void (wtimeout)(Window &win, int delay);
 // Reads input on a window.
 int (wget_wch)(Window &win, std::wint_t *wch);
 
-// Enables an attribute.
-void (wattron)(Window &win, Attribs attrs);
-// Disables an attribute.
-void (wattroff)(Window &win, Attribs attrs);
 // Sets cursor position inside the window.
 void (wmove)(Window &win, int y, int x);
 // Erases current line until its end.

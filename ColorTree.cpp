@@ -90,6 +90,14 @@ Format::operator()(std::wstring text) const
     return ColorTree(std::move(text), *this);
 }
 
+ColorTree
+Format::operator()(ColorTree &&tree) const
+{
+    ColorTree newTree(*this);
+    newTree.append(std::move(tree));
+    return newTree;
+}
+
 ColorTree::ColorTree(Format format) : format(std::move(format))
 { }
 
