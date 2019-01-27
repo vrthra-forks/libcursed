@@ -41,8 +41,14 @@ split(const std::basic_string<C> &str)
     return result;
 }
 
-Text::Text(const std::wstring &text) : lines(split(text)), top(0), height(0)
+Text::Text() : top(0), height(0)
 { }
+
+void
+Text::setLines(std::vector<ColorTree> newLines)
+{
+    lines = std::move(newLines);
+}
 
 void
 Text::draw()
@@ -56,7 +62,8 @@ Text::draw()
 
         wmove(win, line, 0);
         wclrtoeol(win);
-        wprintw(win, " %ls ", lines[i].c_str());
+        wmove(win, line, 1);
+        win.print(lines[i]);
     }
     wnoutrefresh(win);
 }

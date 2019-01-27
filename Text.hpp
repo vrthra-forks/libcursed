@@ -22,6 +22,7 @@
 #include <string>
 #include <vector>
 
+#include "ColorTree.hpp"
 #include "Widget.hpp"
 #include "Window.hpp"
 
@@ -31,8 +32,8 @@ namespace cursed {
 class Text : public Widget
 {
 public:
-    // Remembers the argument.  Can throw `std::runtime_error`.
-    explicit Text(const std::wstring &text);
+    // Constructs an empty text widget.  Can throw `std::runtime_error`.
+    explicit Text();
 
     Text(const Text &rhs) = delete;
     Text(Text &&rhs) = delete;
@@ -40,6 +41,9 @@ public:
     Text & operator=(Text &&rhs) = delete;
 
 public:
+    // Assigns list of lines.
+    void setLines(std::vector<ColorTree> newLines);
+
     // Updates state of this widget to be published on the screen.
     virtual void draw() override;
 
@@ -58,10 +62,10 @@ private:
     virtual void placed(Pos newPos, Size newSize) override;
 
 private:
-    guts::Window win;                // Window object.
-    std::vector<std::wstring> lines; // Text itself.
-    int top;                         // First element to display.
-    int height;                      // Screen height.
+    guts::Window win;             // Window object.
+    std::vector<ColorTree> lines; // Text itself.
+    int top;                      // First element to display.
+    int height;                   // Screen height.
 };
 
 }
