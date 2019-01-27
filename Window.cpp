@@ -24,6 +24,7 @@
 
 #include <stdexcept>
 
+#include "ColorTree.hpp"
 #include "Pos.hpp"
 #include "Size.hpp"
 
@@ -57,6 +58,26 @@ Window::place(Pos newPos, Size newSize)
     // resizing should be performed first.
     wresize(w(ptr), newSize.lines, newSize.cols);
     mvwin(w(ptr), newPos.y, newPos.x);
+}
+
+void
+Window::print(const ColorTree &colored)
+{
+    colored.visit([&](const std::wstring &text, const Format &format) {
+        int attrs = 0;
+        if (format.isBold()) {
+            attrs |= A_BOLD;
+        }
+        if (format.isReversed()) {
+            attrs |= A_REVERSE;
+        }
+        if (format.isUnderlined()) {
+            attrs |= A_UNDERLINE;
+        }
+        wattrset(w(ptr), attrs);
+
+        wprintw(*this, "%ls", text.c_str());
+    });
 }
 
 void

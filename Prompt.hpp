@@ -19,8 +19,7 @@
 #ifndef LIBCURSED__PROMPT_HPP__
 #define LIBCURSED__PROMPT_HPP__
 
-#include <string>
-
+#include "ColorTree.hpp"
 #include "Widget.hpp"
 #include "Window.hpp"
 
@@ -40,7 +39,7 @@ public:
 
 public:
     // Updates text and cursor position of the prompt.
-    void setText(std::wstring newText, int newPos);
+    void setText(ColorTree newText, int newPos);
 
     // Updates state of this widget to be published on the screen.
     virtual void draw() override;
@@ -55,9 +54,9 @@ private:
     virtual void placed(Pos newPos, Size newSize) override;
 
 private:
-    guts::Window win;  // Window object.
-    std::wstring text; // Text of the lprompt.
-    int pos;           // Cursor position.
+    guts::Window win; // Window object.
+    ColorTree text;   // Text of the prompt.
+    int pos;          // Cursor position.
 };
 
 }

@@ -18,16 +18,15 @@
 
 #include "Prompt.hpp"
 
-#include <string>
 #include <utility>
 
 using namespace cursed;
 
-Prompt::Prompt() : pos(text.size())
+Prompt::Prompt() : pos(0)
 { }
 
 void
-Prompt::setText(std::wstring newText, int newPos)
+Prompt::setText(ColorTree newText, int newPos)
 {
     text = std::move(newText);
     pos = newPos;
@@ -37,7 +36,8 @@ void
 Prompt::draw()
 {
     werase(win);
-    mvwprintw(win, 0, 0, "%ls", text.c_str());
+    wmove(win, 0, 0);
+    win.print(text);
     wmove(win, 0, pos);
     wnoutrefresh(win);
 }

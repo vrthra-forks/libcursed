@@ -23,6 +23,7 @@
 
 namespace cursed {
 
+class ColorTree;
 class Pos;
 class Size;
 
@@ -55,6 +56,9 @@ public:
 
     // Updates size and position.
     void place(Pos newPos, Size newSize);
+
+    // Prints colored text on the window at the current cursor position.
+    void print(const ColorTree &colored);
 
 private:
     void *ptr; // Opaque pointer to the resource.
