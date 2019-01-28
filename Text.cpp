@@ -24,23 +24,6 @@
 
 using namespace cursed;
 
-// Splits string into lines.
-template <typename C>
-std::vector<std::basic_string<C>>
-split(const std::basic_string<C> &str)
-{
-    using size_type = typename std::basic_string<C>::size_type;
-
-    std::vector<std::basic_string<C>> result;
-    for (size_type pos = 0U, next = 0U;
-         next != std::basic_string<C>::npos;
-         pos = next + 1U) {
-        next = str.find(static_cast<C>('\n'), pos);
-        result.emplace_back(str, pos, next - pos);
-    }
-    return result;
-}
-
 Text::Text() : top(0), height(0)
 { }
 
