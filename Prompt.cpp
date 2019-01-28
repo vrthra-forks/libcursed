@@ -35,7 +35,7 @@ Prompt::setText(ColorTree newText, int newPos)
 void
 Prompt::draw()
 {
-    werase(win);
+    win.erase();
     wmove(win, 0, 0);
     win.print(text);
     wmove(win, 0, pos);

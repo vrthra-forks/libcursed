@@ -36,7 +36,7 @@ Label::setText(ColorTree newText)
 void
 Label::draw()
 {
-    werase(win);
+    win.erase();
     wmove(win, 0, 0);
     win.print(text);
     wnoutrefresh(win);

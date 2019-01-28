@@ -64,7 +64,7 @@ List::draw()
         top = 0;
         pos = 0;
 
-        werase(win);
+        win.erase();
         wnoutrefresh(win);
         return;
     }
@@ -77,7 +77,7 @@ List::draw()
 
     int lineNumWidth = countWidth(items.size());
 
-    werase(win);
+    win.erase();
     int line = 0;
     for (int i = top; i < top + height; ++i, ++line) {
         if (i == static_cast<int>(items.size())) {

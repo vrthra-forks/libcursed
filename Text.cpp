@@ -36,7 +36,7 @@ Text::setLines(std::vector<ColorTree> newLines)
 void
 Text::draw()
 {
-    werase(win);
+    win.erase();
     int line = 0;
     for (int i = top; i < top + height; ++i, ++line) {
         if (i == static_cast<int>(lines.size())) {

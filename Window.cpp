@@ -59,6 +59,12 @@ Window::place(Pos newPos, Size newSize)
 }
 
 void
+Window::erase()
+{
+    werase(w(ptr));
+}
+
+void
 Window::print(const ColorTree &colored)
 {
     colored.visit([&](const std::wstring &text, const Format &format) {
@@ -76,12 +82,6 @@ Window::print(const ColorTree &colored)
 
         wprintw(w(ptr), "%ls", text.c_str());
     });
-}
-
-void
-(guts::werase)(Window &win)
-{
-    werase(w(win.raw()));
 }
 
 void
