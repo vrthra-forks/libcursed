@@ -69,3 +69,9 @@ Screen::hideCursor()
 {
     curs_set(0);
 }
+
+void
+Screen::stopTUI()
+{
+    endwin();
+}

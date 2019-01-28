@@ -42,6 +42,9 @@ public:
     // Makes cursor invisible.
     void hideCursor();
 
+    // Hides current application's version of the screen.
+    void stopTUI();
+
 private:
     Widget *mainWidget = nullptr; // Root of all currently displayed widgets.
 };
