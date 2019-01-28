@@ -20,6 +20,7 @@
 
 #include <curses.h>
 
+#include "ColorManager.hpp"
 #include "Size.hpp"
 #include "Widget.hpp"
 
@@ -53,6 +54,7 @@ void
 Screen::draw()
 {
     if (mainWidget != nullptr) {
+        guts::ColorManager::get().reset();
         mainWidget->draw();
         doupdate();
     }

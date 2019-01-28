@@ -28,6 +28,9 @@ Init::Init()
     curs_set(0);
     noecho();
 
+    start_color();
+    use_default_colors();
+
     werase(stdscr);
     wrefresh(stdscr);
 }

@@ -52,6 +52,14 @@ public:
                 current.setUnderlined(true);
             }
         }
+        if (format.hasForeground()) {
+            fg.push(format.getForeground());
+            current.setForeground(fg.top());
+        }
+        if (format.hasBackground()) {
+            bg.push(format.getBackground());
+            current.setBackground(bg.top());
+        }
         return *this;
     }
 
@@ -71,6 +79,14 @@ public:
                 current.setUnderlined(false);
             }
         }
+        if (format.hasForeground()) {
+            fg.pop();
+            current.setForeground(fg.empty() ? -1 : fg.top());
+        }
+        if (format.hasBackground()) {
+            bg.pop();
+            current.setBackground(bg.empty() ? -1 : bg.top());
+        }
         return *this;
     }
 
@@ -80,6 +96,8 @@ public:
 
 private:
     Format current;            // Current format.
+    std::stack<int> fg;        // Stack of active foreground colors.
+    std::stack<int> bg;        // Stack of active background colors.
     int boldCounter = 0;       // Count bold attribute was encountered.
     int underlinedCounter = 0; // Count underline attribute was encountered.
 };

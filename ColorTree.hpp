@@ -60,6 +60,26 @@ public:
     bool isUnderlined() const
     { return underlined; }
 
+    // Sets foreground color (negative value means "no color").
+    void setForeground(int color)
+    { fg = (color < 0 ? -1 : color); }
+    // Retrieves foreground color.
+    int getForeground() const
+    { return fg; }
+    // Checks if foreground color is set.
+    bool hasForeground() const
+    { return fg >= 0; }
+
+    // Sets background color (negative value means "no color").
+    void setBackground(int color)
+    { bg = (color < 0 ? -1 : color); }
+    // Retrieves background color.
+    int getBackground() const
+    { return bg; }
+    // Checks if background color is set.
+    bool hasBackground() const
+    { return bg >= 0; }
+
     // Resolves ambiguity on invoking `operator()` with a wide literal.
     template <std::size_t N>
     ColorTree operator()(const wchar_t (&text)[N]);
@@ -69,6 +89,8 @@ public:
     ColorTree operator()(ColorTree &&tree) const;
 
 private:
+    int fg = -1;             // Foreground color or negative number.
+    int bg = -1;             // Background color or negative number.
     bool bold = false;       // Whether text is bold.
     bool reversed = false;   // Whether text has reversed colors.
     bool underlined = false; // Whether text is underlined.

@@ -22,6 +22,7 @@
 
 #include <stdexcept>
 
+#include "ColorManager.hpp"
 #include "ColorTree.hpp"
 #include "Pos.hpp"
 #include "Size.hpp"
@@ -80,6 +81,11 @@ Window::print(const ColorTree &colored)
         }
         wattrset(w(ptr), attrs);
 
+        int fg = format.getForeground();
+        int bg = format.getBackground();
+        attrs |= COLOR_PAIR(ColorManager::get().makePair(fg, bg));
+
+        wattrset(w(ptr), attrs);
         wprintw(w(ptr), "%ls", text.c_str());
     });
 }

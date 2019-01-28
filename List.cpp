@@ -47,6 +47,7 @@ countWidth(int n)
 List::List() : pos(0), top(0), height(0)
 {
     currentHi.setReversed(true);
+    currentHi.setForeground(3);
 }
 
 void
