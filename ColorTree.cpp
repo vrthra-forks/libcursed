@@ -116,6 +116,27 @@ Format::operator()(ColorTree &&tree) const
     return newTree;
 }
 
+Format &
+cursed::operator+=(Format &lhs, const Format &rhs)
+{
+    if (rhs.isBold()) {
+        lhs.setBold(true);
+    }
+    if (rhs.isReversed()) {
+        lhs.setReversed(!lhs.isReversed());
+    }
+    if (rhs.isUnderlined()) {
+        lhs.setUnderlined(true);
+    }
+    if (rhs.hasForeground()) {
+        lhs.setForeground(rhs.getForeground());
+    }
+    if (rhs.hasBackground()) {
+        lhs.setBackground(rhs.getBackground());
+    }
+    return lhs;
+}
+
 ColorTree::ColorTree(Format format) : format(std::move(format))
 { }
 

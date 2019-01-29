@@ -152,9 +152,11 @@ List::draw()
         oss << L' '
             << std::setw(lineNumWidth) << i + 1 << L": ";
 
-        Format primeFormat(i == pos ? currentHi : cursed::Format());
-        ColorTree colored = primeFormat(oss.str() + ColorTree(items[i]) + L" ");
-        win.print(itemHi(std::move(colored)));
+        Format hi = itemHi;
+        if (i == pos) {
+            hi += currentHi;
+        }
+        win.print(hi(oss.str() + ColorTree(items[i]) + L" "));
     }
     wnoutrefresh(win);
 }

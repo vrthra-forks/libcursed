@@ -96,6 +96,9 @@ private:
     bool underlined = false; // Whether text is underlined.
 };
 
+// Mixes one format with another.
+Format & operator+=(Format &lhs, const Format &rhs);
+
 // Describes hierarchically colourable piece of text.
 class ColorTree
 {
