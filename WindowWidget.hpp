@@ -16,34 +16,33 @@
 // You should have received a copy of the GNU General Public License
 // along with libcursed.  If not, see <https://www.gnu.org/licenses/>.
 
-#include "Prompt.hpp"
+#ifndef LIBCURSED__WINDOWWIDGET_HPP__
+#define LIBCURSED__WINDOWWIDGET_HPP__
 
 #include <utility>
 
-using namespace cursed;
+#include "Pos.hpp"
+#include "Size.hpp"
+#include "Widget.hpp"
+#include "Window.hpp"
 
-Prompt::Prompt() : pos(0)
-{ }
+namespace cursed {
 
-void
-Prompt::setText(ColorTree newText, int newPos)
+// Base class for all Window-based widgets in the library.
+class WindowWidget : public Widget
 {
-    text = std::move(newText);
-    pos = newPos;
+protected:
+    // Resizes and moves window.
+    virtual void placed(Pos newPos, Size newSize) override;
+
+protected:
+    guts::Window win; // Window object.
+};
+
+inline void
+WindowWidget::placed(Pos newPos, Size newSize)
+{ win.place(newPos, newSize); }
+
 }
 
-void
-Prompt::draw()
-{
-    win.erase();
-    wmove(win, 0, 0);
-    win.print(text);
-    wmove(win, 0, pos);
-    wnoutrefresh(win);
-}
-
-int
-Prompt::desiredHeight()
-{
-    return 1;
-}
+#endif // LIBCURSED__WINDOWWIDGET_HPP__

@@ -20,13 +20,12 @@
 #define LIBCURSED__LABEL_HPP__
 
 #include "ColorTree.hpp"
-#include "Widget.hpp"
-#include "Window.hpp"
+#include "WindowWidget.hpp"
 
 namespace cursed {
 
 // Static text field.
-class Label : public Widget
+class Label : public WindowWidget
 {
 public:
     // Constructs a label.  Can throw `std::runtime_error`.
@@ -50,11 +49,7 @@ private:
     // Negative number means at least that much in magnitude.
     virtual int desiredHeight() override;
 
-    // Notifies widget of new position and size.
-    virtual void placed(Pos newPos, Size newSize) override;
-
 private:
-    guts::Window win; // Window object.
     ColorTree text;   // Text of the label.
 };
 

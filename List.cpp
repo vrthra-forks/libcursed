@@ -168,6 +168,6 @@ List::desiredHeight()
 void
 List::placed(Pos newPos, Size newSize)
 {
-    win.place(newPos, newSize);
+    WindowWidget::placed(newPos, newSize);
     height = newSize.lines;
 }

@@ -23,13 +23,12 @@
 #include <vector>
 
 #include "ColorTree.hpp"
-#include "Widget.hpp"
-#include "Window.hpp"
+#include "WindowWidget.hpp"
 
 namespace cursed {
 
 // A scrollable widget for displaying static text.
-class Text : public Widget
+class Text : public WindowWidget
 {
 public:
     // Constructs an empty text widget.  Can throw `std::runtime_error`.
@@ -62,7 +61,6 @@ private:
     virtual void placed(Pos newPos, Size newSize) override;
 
 private:
-    guts::Window win;             // Window object.
     std::vector<ColorTree> lines; // Text itself.
     int top;                      // First element to display.
     int height;                   // Screen height.

@@ -47,9 +47,3 @@ Label::desiredHeight()
 {
     return 1;
 }
-
-void
-Label::placed(Pos newPos, Size newSize)
-{
-    win.place(newPos, newSize);
-}

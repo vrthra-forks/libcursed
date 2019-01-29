@@ -20,13 +20,12 @@
 #define LIBCURSED__PROMPT_HPP__
 
 #include "ColorTree.hpp"
-#include "Widget.hpp"
-#include "Window.hpp"
+#include "WindowWidget.hpp"
 
 namespace cursed {
 
 // Prompt for requesting input.
-class Prompt : public Widget
+class Prompt : public WindowWidget
 {
 public:
     // Constructs a prompt.  Can throw `std::runtime_error`.
@@ -50,13 +49,9 @@ private:
     // Negative number means at least that much in magnitude.
     virtual int desiredHeight() override;
 
-    // Notifies widget of new position and size.
-    virtual void placed(Pos newPos, Size newSize) override;
-
 private:
-    guts::Window win; // Window object.
-    ColorTree text;   // Text of the prompt.
-    int pos;          // Cursor position.
+    ColorTree text; // Text of the prompt.
+    int pos;        // Cursor position.
 };
 
 }

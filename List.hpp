@@ -23,13 +23,12 @@
 #include <vector>
 
 #include "ColorTree.hpp"
-#include "Widget.hpp"
-#include "Window.hpp"
+#include "WindowWidget.hpp"
 
 namespace cursed {
 
 // A scrollable list of textual items.
-class List : public Widget
+class List : public WindowWidget
 {
 public:
     // Constructs an empty list.  Can throw `std::runtime_error`.
@@ -75,7 +74,6 @@ private:
     virtual void placed(Pos newPos, Size newSize) override;
 
 private:
-    guts::Window win;             // Window object.
     std::vector<ColorTree> items; // List of items.
     int pos;                      // Current cursor position.
     int top;                      // First element to display.

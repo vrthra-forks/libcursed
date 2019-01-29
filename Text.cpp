@@ -81,6 +81,6 @@ Text::desiredHeight()
 void
 Text::placed(Pos newPos, Size newSize)
 {
-    win.place(newPos, newSize);
+    WindowWidget::placed(newPos, newSize);
     height = newSize.lines;
 }
