@@ -36,10 +36,11 @@ public:
 public:
     // Performs position and size update.
     virtual void place(Pos newPos, Size newSize) override;
+
+private:
     // Updates state of this widget to be published on the screen.
     virtual void draw() override;
 
-private:
     // Retrieves vertical size policy.
     // Positive number or zero means exactly that much.
     // Negative number means at least that much in magnitude.

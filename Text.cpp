@@ -34,24 +34,6 @@ Text::setLines(std::vector<ColorTree> newLines)
 }
 
 void
-Text::draw()
-{
-    win.erase();
-    int line = 0;
-    for (int i = top; i < top + height; ++i, ++line) {
-        if (i == static_cast<int>(lines.size())) {
-            break;
-        }
-
-        wmove(win, line, 0);
-        wclrtoeol(win);
-        wmove(win, line, 1);
-        win.print(lines[i]);
-    }
-    wnoutrefresh(win);
-}
-
-void
 Text::scrollDown()
 {
     ++top;
@@ -70,6 +52,24 @@ Text::scrollUp()
     if (top < 0) {
         top = 0;
     }
+}
+
+void
+Text::draw()
+{
+    win.erase();
+    int line = 0;
+    for (int i = top; i < top + height; ++i, ++line) {
+        if (i == static_cast<int>(lines.size())) {
+            break;
+        }
+
+        wmove(win, line, 0);
+        wclrtoeol(win);
+        wmove(win, line, 1);
+        win.print(lines[i]);
+    }
+    wnoutrefresh(win);
 }
 
 int

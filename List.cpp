@@ -59,47 +59,6 @@ List::setItems(std::vector<ColorTree> newItems)
 }
 
 void
-List::draw()
-{
-    if (items.empty()) {
-        top = 0;
-        pos = 0;
-
-        win.erase();
-        wnoutrefresh(win);
-        return;
-    }
-
-    if (pos < top) {
-        top = pos;
-    } else if (pos >= top + height) {
-        top = pos - (height - 1);
-    }
-
-    int lineNumWidth = countWidth(items.size());
-
-    win.erase();
-    int line = 0;
-    for (int i = top; i < top + height; ++i, ++line) {
-        if (i == static_cast<int>(items.size())) {
-            break;
-        }
-
-        wmove(win, line, 0);
-        wclrtoeol(win);
-
-        std::wostringstream oss;
-        oss << L' '
-            << std::setw(lineNumWidth) << i + 1 << L": ";
-
-        Format primeFormat(i == pos ? currentHi : cursed::Format());
-        ColorTree colored = primeFormat(oss.str() + ColorTree(items[i]) + L" ");
-        win.print(itemHi(std::move(colored)));
-    }
-    wnoutrefresh(win);
-}
-
-void
 List::moveToFirst()
 {
     pos = 0;
@@ -157,6 +116,47 @@ List::getCurrent() const
         current += text;
     });
     return current;
+}
+
+void
+List::draw()
+{
+    if (items.empty()) {
+        top = 0;
+        pos = 0;
+
+        win.erase();
+        wnoutrefresh(win);
+        return;
+    }
+
+    if (pos < top) {
+        top = pos;
+    } else if (pos >= top + height) {
+        top = pos - (height - 1);
+    }
+
+    int lineNumWidth = countWidth(items.size());
+
+    win.erase();
+    int line = 0;
+    for (int i = top; i < top + height; ++i, ++line) {
+        if (i == static_cast<int>(items.size())) {
+            break;
+        }
+
+        wmove(win, line, 0);
+        wclrtoeol(win);
+
+        std::wostringstream oss;
+        oss << L' '
+            << std::setw(lineNumWidth) << i + 1 << L": ";
+
+        Format primeFormat(i == pos ? currentHi : cursed::Format());
+        ColorTree colored = primeFormat(oss.str() + ColorTree(items[i]) + L" ");
+        win.print(itemHi(std::move(colored)));
+    }
+    wnoutrefresh(win);
 }
 
 int

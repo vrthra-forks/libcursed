@@ -40,10 +40,10 @@ public:
     // Updates text and cursor position of the prompt.
     void setText(ColorTree newText, int newPos);
 
+private:
     // Updates state of this widget to be published on the screen.
     virtual void draw() override;
 
-private:
     // Retrieves vertical size policy.
     // Positive number or zero means exactly that much.
     // Negative number means at least that much in magnitude.

@@ -40,10 +40,10 @@ public:
     // Updates text of the label.
     void setText(ColorTree newText);
 
+private:
     // Updates state of this widget to be published on the screen.
     virtual void draw() override;
 
-private:
     // Retrieves vertical size policy.
     // Positive number or zero means exactly that much.
     // Negative number means at least that much in magnitude.

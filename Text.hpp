@@ -43,15 +43,15 @@ public:
     // Assigns list of lines.
     void setLines(std::vector<ColorTree> newLines);
 
-    // Updates state of this widget to be published on the screen.
-    virtual void draw() override;
-
     // Scrolls text one line down.
     void scrollDown();
     // Scrolls text one line up.
     void scrollUp();
 
 private:
+    // Updates state of this widget to be published on the screen.
+    virtual void draw() override;
+
     // Retrieves vertical size policy.
     // Positive number or zero means exactly that much.
     // Negative number means at least that much in magnitude.

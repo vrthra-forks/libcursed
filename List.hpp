@@ -43,9 +43,6 @@ public:
     // Assigns list of items.
     void setItems(std::vector<ColorTree> newItems);
 
-    // Updates state of this widget to be published on the screen.
-    virtual void draw() override;
-
     // Puts cursor on the first element.
     void moveToFirst();
     // Puts cursor on the last element.
@@ -65,6 +62,9 @@ public:
     std::wstring getCurrent() const;
 
 private:
+    // Updates state of this widget to be published on the screen.
+    virtual void draw() override;
+
     // Retrieves vertical size policy.
     // Positive number or zero means exactly that much.
     // Negative number means at least that much in magnitude.
