@@ -34,6 +34,21 @@ Text::setLines(std::vector<ColorTree> newLines)
 }
 
 void
+Text::scrollToTop()
+{
+    top = 0;
+}
+
+void
+Text::scrollToBottom()
+{
+    top = static_cast<int>(lines.size()) - height;
+    if (top < 0) {
+        top = 0;
+    }
+}
+
+void
 Text::scrollDown()
 {
     ++top;

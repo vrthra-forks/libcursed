@@ -43,6 +43,11 @@ public:
     // Assigns list of lines.
     void setLines(std::vector<ColorTree> newLines);
 
+    // Scrolls all the way up.
+    void scrollToTop();
+    // Scrolls all the way down.
+    void scrollToBottom();
+
     // Scrolls text one line down.
     void scrollDown();
     // Scrolls text one line up.
