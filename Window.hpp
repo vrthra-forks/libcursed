@@ -21,9 +21,10 @@
 
 #include <cwctype>
 
+#include "ColorTree.hpp"
+
 namespace cursed {
 
-class ColorTree;
 class Pos;
 class Size;
 
@@ -51,6 +52,10 @@ public:
     // Updates size and position.
     void place(Pos newPos, Size newSize);
 
+    // Sets background format of the window (it affects more than background
+    // with attributes and/or foreground).
+    void setBackground(Format format);
+
     // Clears window.
     void erase();
 
@@ -59,6 +64,7 @@ public:
 
 private:
     void *ptr; // Opaque pointer to the resource.
+    Format bg; // Background/default format of the window.
 };
 
 // Publishes changes to be displayed on the next screen update.

@@ -21,6 +21,7 @@
 #include <curses.h>
 
 #include <stdexcept>
+#include <utility>
 
 #include "ColorManager.hpp"
 #include "ColorTree.hpp"
@@ -29,6 +30,8 @@
 
 using namespace cursed::guts;
 namespace guts = cursed::guts;
+
+static int attrsFromFmt(const cursed::Format &format);
 
 // A shorthand for converting `void *` to `WINDOW *`.
 static inline WINDOW *
@@ -60,8 +63,15 @@ Window::place(Pos newPos, Size newSize)
 }
 
 void
+Window::setBackground(Format format)
+{
+    bg = std::move(format);
+}
+
+void
 Window::erase()
 {
+    wbkgdset(w(ptr), attrsFromFmt(bg));
     werase(w(ptr));
 }
 
@@ -69,25 +79,32 @@ void
 Window::print(const ColorTree &colored)
 {
     colored.visit([&](const std::wstring &text, const Format &format) {
-        int attrs = 0;
-        if (format.isBold()) {
-            attrs |= A_BOLD;
-        }
-        if (format.isReversed()) {
-            attrs |= A_REVERSE;
-        }
-        if (format.isUnderlined()) {
-            attrs |= A_UNDERLINE;
-        }
-        wattrset(w(ptr), attrs);
-
-        int fg = format.getForeground();
-        int bg = format.getBackground();
-        attrs |= COLOR_PAIR(ColorManager::get().makePair(fg, bg));
-
-        wattrset(w(ptr), attrs);
+        wattrset(w(ptr), attrsFromFmt(format));
         wprintw(w(ptr), "%ls", text.c_str());
     });
+}
+
+// Converts format into curses character attributes.
+static int
+attrsFromFmt(const cursed::Format &format)
+{
+    int attrs = 0;
+
+    if (format.isBold()) {
+        attrs |= A_BOLD;
+    }
+    if (format.isReversed()) {
+        attrs |= A_REVERSE;
+    }
+    if (format.isUnderlined()) {
+        attrs |= A_UNDERLINE;
+    }
+
+    int fg = format.getForeground();
+    int bg = format.getBackground();
+    attrs |= COLOR_PAIR(ColorManager::get().makePair(fg, bg));
+
+    return attrs;
 }
 
 void

@@ -31,6 +31,11 @@ namespace cursed {
 // Base class for all Window-based widgets in the library.
 class WindowWidget : public Widget
 {
+public:
+    // Sets background format of the window (it affects more than background
+    // with attributes and/or foreground).
+    void setBackground(Format format);
+
 protected:
     // Resizes and moves window.
     virtual void placed(Pos newPos, Size newSize) override;
@@ -38,6 +43,10 @@ protected:
 protected:
     guts::Window win; // Window object.
 };
+
+inline void
+WindowWidget::setBackground(Format format)
+{ win.setBackground(std::move(format)); }
 
 inline void
 WindowWidget::placed(Pos newPos, Size newSize)
