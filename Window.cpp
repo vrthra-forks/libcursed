@@ -31,7 +31,43 @@
 using namespace cursed::guts;
 namespace guts = cursed::guts;
 
-static int attrsFromFmt(const cursed::Format &format);
+namespace {
+
+// Just a combination of color pair and curses attributes.
+struct Rendition
+{
+    int pair;
+    int attrs;
+
+    // Converts format into curses data.
+    explicit Rendition(const cursed::Format &format)
+    {
+        attrs = 0;
+        if (format.isBold()) {
+            attrs |= WA_BOLD;
+        }
+        if (format.isReversed()) {
+            attrs |= WA_REVERSE;
+        }
+        if (format.isUnderlined()) {
+            attrs |= WA_UNDERLINE;
+        }
+
+        int fg = format.getForeground();
+        int bg = format.getBackground();
+        pair = ColorManager::get().makePair(fg, bg);
+    }
+
+    // Performs conversion to type known to curses.
+    cchar_t toCChar() const
+    {
+        cchar_t cch;
+        setcchar(&cch, L" ", attrs, pair, nullptr);
+        return cch;
+    }
+};
+
+}
 
 // A shorthand for converting `void *` to `WINDOW *`.
 static inline WINDOW *
@@ -71,7 +107,10 @@ Window::setBackground(Format format)
 void
 Window::erase()
 {
-    wbkgdset(w(ptr), attrsFromFmt(bg));
+    Rendition rendition(bg);
+    cchar_t cch = rendition.toCChar();
+    wbkgrndset(w(ptr), &cch);
+
     werase(w(ptr));
 }
 
@@ -79,32 +118,10 @@ void
 Window::print(const ColorTree &colored)
 {
     colored.visit([&](const std::wstring &text, const Format &format) {
-        wattrset(w(ptr), attrsFromFmt(format));
+        Rendition rendition(format);
+        wattr_set(w(ptr), rendition.attrs, rendition.pair, nullptr);
         wprintw(w(ptr), "%ls", text.c_str());
     });
-}
-
-// Converts format into curses character attributes.
-static int
-attrsFromFmt(const cursed::Format &format)
-{
-    int attrs = 0;
-
-    if (format.isBold()) {
-        attrs |= A_BOLD;
-    }
-    if (format.isReversed()) {
-        attrs |= A_REVERSE;
-    }
-    if (format.isUnderlined()) {
-        attrs |= A_UNDERLINE;
-    }
-
-    int fg = format.getForeground();
-    int bg = format.getBackground();
-    attrs |= COLOR_PAIR(ColorManager::get().makePair(fg, bg));
-
-    return attrs;
 }
 
 void
