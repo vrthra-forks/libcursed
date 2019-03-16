@@ -93,7 +93,6 @@ List::moveUp(int by)
 void
 List::moveToPos(int newPos)
 {
-    --newPos;
     if (newPos < 0) {
         newPos = 0;
     }
