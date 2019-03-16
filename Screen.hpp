@@ -19,6 +19,8 @@
 #ifndef LIBCURSED__SCREEN_HPP__
 #define LIBCURSED__SCREEN_HPP__
 
+#include <vector>
+
 namespace cursed {
 
 class Widget;
@@ -27,9 +29,13 @@ class Widget;
 class Screen
 {
 public:
-    // Sets widget and stretches it over the whole screen.  `w` can be
-    // `nullptr`.
-    void setMainWidget(Widget *w);
+    // Sets/updates top widget and stretches it over the whole screen.
+    void replaceTopWidget(Widget *w);
+
+    // Pushes widget as the top one.
+    void pushMainWidget(Widget *w);
+    // Pops the top widget.
+    void popMainWidget();
 
     // Handles screen resizing.
     void resize();
@@ -46,7 +52,8 @@ public:
     void stopTUI();
 
 private:
-    Widget *mainWidget = nullptr; // Root of all currently displayed widgets.
+    // Roots of all currently displayed layers of widgets.
+    std::vector<Widget *> mainWidgets;
 };
 
 }

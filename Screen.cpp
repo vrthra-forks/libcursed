@@ -36,28 +36,44 @@ getSize()
 }
 
 void
-Screen::setMainWidget(Widget *w)
+Screen::replaceTopWidget(Widget *w)
 {
-    mainWidget = w;
-    resize();
+    if (!mainWidgets.empty()) {
+        popMainWidget();
+    }
+    pushMainWidget(w);
+}
+
+void
+Screen::pushMainWidget(Widget *w)
+{
+    mainWidgets.push_back(w);
+    w->place(Pos(), getSize());
+}
+
+void
+Screen::popMainWidget()
+{
+    mainWidgets.pop_back();
 }
 
 void
 Screen::resize()
 {
-    if (mainWidget != nullptr) {
-        mainWidget->place(Pos(), getSize());
+    Size size = getSize();
+    for (Widget *widget : mainWidgets) {
+        widget->place(Pos(), size);
     }
 }
 
 void
 Screen::draw()
 {
-    if (mainWidget != nullptr) {
-        guts::ColorManager::get().reset();
-        mainWidget->draw();
-        doupdate();
+    guts::ColorManager::get().reset();
+    for (Widget *widget : mainWidgets) {
+        widget->draw();
     }
+    doupdate();
 }
 
 void
