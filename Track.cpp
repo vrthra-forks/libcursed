@@ -18,6 +18,7 @@
 
 #include "Track.hpp"
 
+#include <algorithm>
 #include <vector>
 
 using namespace cursed;
@@ -31,6 +32,9 @@ Track::addItem(Widget *w)
 void
 Track::place(Pos newPos, Size newSize)
 {
+    // Narrow range of values to avoid integer overflows.
+    const int Range = 10000;
+
     int nFlexible = 0;
     int booked = 0;
     std::vector<int> needed;
@@ -40,7 +44,8 @@ Track::place(Pos newPos, Size newSize)
 
     // Place items with fixed size.
     for (Widget *w : widgets) {
-        int neededHeight = w->desiredHeight();
+        int neededHeight = std::max(std::min(w->desiredHeight(), Range),
+                                    -Range);
         needed.push_back(neededHeight);
 
         if (neededHeight < 0) {
