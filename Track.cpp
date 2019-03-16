@@ -54,7 +54,8 @@ Track::place(Pos newPos, Size newSize)
     }
 
     // Place flexible items giving them share of extra space.
-    int extraFraction = (newSize.lines - booked)/nFlexible;
+    int extraFraction = (nFlexible != 0) ? (newSize.lines - booked)/nFlexible
+                                         : 0;
     for (unsigned int i = 0U; i < needed.size(); ++i) {
         if (needed[i] < 0) {
             --nFlexible;
