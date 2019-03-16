@@ -59,6 +59,12 @@ List::setItems(std::vector<ColorTree> newItems)
 }
 
 void
+List::setItem(int pos, ColorTree newValue)
+{
+    items[pos] = std::move(newValue);
+}
+
+void
 List::moveToFirst()
 {
     pos = 0;
@@ -100,6 +106,12 @@ List::moveToPos(int newPos)
         newPos = items.size() - 1;
     }
     pos = newPos;
+}
+
+int
+List::getPos() const
+{
+    return pos;
 }
 
 std::wstring

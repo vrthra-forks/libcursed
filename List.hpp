@@ -42,6 +42,8 @@ public:
 public:
     // Assigns list of items.
     void setItems(std::vector<ColorTree> newItems);
+    // Updates an item at position (should be a valid index).
+    void setItem(int pos, ColorTree newValue);
 
     // Puts cursor on the first element.
     void moveToFirst();
@@ -56,6 +58,9 @@ public:
     // Moves cursor to the specified position (incorrect value is turned into
     // closes bound).
     void moveToPos(int newPos);
+
+    // Retrieves current position.
+    int getPos() const;
 
     // Returns value of the element under the cursor or an empty string for
     // empty list.
