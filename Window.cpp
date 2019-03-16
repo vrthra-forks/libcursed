@@ -94,8 +94,12 @@ Window::place(Pos newPos, Size newSize)
 {
     // Move fails if window would be only partially visible at destination, so
     // resizing should be performed first.
-    wresize(w(ptr), newSize.lines, newSize.cols);
-    mvwin(w(ptr), newPos.y, newPos.x);
+    if (wresize(w(ptr), newSize.lines, newSize.cols) != OK) {
+        throw std::runtime_error("Failed to resize curses window");
+    }
+    if (mvwin(w(ptr), newPos.y, newPos.x) != OK) {
+        throw std::runtime_error("Failed to move curses window");
+    }
 }
 
 void

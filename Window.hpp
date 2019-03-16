@@ -49,7 +49,7 @@ public:
     void * raw()
     { return ptr; }
 
-    // Updates size and position.
+    // Updates size and position.  Throws `std::runtime_error` on failure.
     void place(Pos newPos, Size newSize);
 
     // Sets background format of the window (it affects more than background
