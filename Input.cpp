@@ -59,16 +59,21 @@ InputElement::operator==(wchar_t wch) const
     return (status == OK && static_cast<wchar_t>(*this) == wch);
 }
 
-Input::Input()
+Input::Input(Keypad keypad)
 {
+    guts::keypad(readWin, keypad == Keypad::Enabled);
     wtimeout(peekWin, 0);
 }
 
 InputElement
 Input::read()
 {
+    // Refresh the window, because otherwise curses clears the screen on call to
+    // `wget_wch()` (why does it do this?).
+    wnoutrefresh(readWin);
+
     std::wint_t wch;
-    int status = get_wch(&wch);
+    int status = wget_wch(readWin, &wch);
 
     InputElement ie(status, wch);
 

@@ -25,6 +25,12 @@
 
 namespace cursed {
 
+// Keypad keycodes support flag.
+enum class Keypad {
+    Enabled, // Functional keys are returned as special key codes.
+    Disabled // Functional keys are returned as escape-sequences.
+};
+
 // Describes single input event.
 class InputElement
 {
@@ -59,8 +65,9 @@ private:
 class Input
 {
 public:
-    // Initializes state.
-    Input();
+    // Initializes state configuring whether functional keys are treated
+    // specially or returned as escape-sequences.
+    explicit Input(Keypad keypad);
 
     Input(const Input &rhs) = delete;
     Input(Input &&rhs) = delete;
@@ -75,6 +82,7 @@ public:
     InputElement peek();
 
 private:
+    guts::Window readWin; // Window for reading input.
     guts::Window peekWin; // Window for peeking (needs zero timeout).
 };
 

@@ -67,6 +67,10 @@ private:
     Format bg; // Background/default format of the window.
 };
 
+// Sets a window flag that defines whether functional keys are recognized as
+// such.  Disabled by default.
+void (keypad)(Window &win, bool bf);
+
 // Publishes changes to be displayed on the next screen update.
 void (wnoutrefresh)(Window &win);
 

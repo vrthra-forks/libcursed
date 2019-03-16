@@ -128,6 +128,13 @@ Window::print(const ColorTree &colored)
     });
 }
 
+
+void
+(guts::keypad)(Window &win, bool bf)
+{
+    keypad(w(win.raw()), bf);
+}
+
 void
 (guts::wnoutrefresh)(Window &win)
 {
