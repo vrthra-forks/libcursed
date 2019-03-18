@@ -19,13 +19,13 @@
 #ifndef LIBCURSED__LABEL_HPP__
 #define LIBCURSED__LABEL_HPP__
 
+#include "guts/WindowWidget.hpp"
 #include "ColorTree.hpp"
-#include "WindowWidget.hpp"
 
 namespace cursed {
 
 // Static text field.
-class Label : public WindowWidget
+class Label : public guts::WindowWidget
 {
 public:
     // Constructs a label.  Can throw `std::runtime_error`.

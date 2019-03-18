@@ -23,6 +23,7 @@
 #include <vector>
 
 using namespace cursed;
+using namespace cursed::guts;
 
 Text::Text() : top(0), height(0)
 { }

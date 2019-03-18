@@ -26,9 +26,10 @@
 #include <utility>
 #include <vector>
 
-#include "Size.hpp"
+#include "guts/Size.hpp"
 
 using namespace cursed;
+using namespace cursed::guts;
 
 // Computes number of digits in a positive number (including zero).
 static inline int

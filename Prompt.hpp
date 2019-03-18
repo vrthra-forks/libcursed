@@ -19,13 +19,13 @@
 #ifndef LIBCURSED__PROMPT_HPP__
 #define LIBCURSED__PROMPT_HPP__
 
+#include "guts/WindowWidget.hpp"
 #include "ColorTree.hpp"
-#include "WindowWidget.hpp"
 
 namespace cursed {
 
 // Prompt for requesting input.
-class Prompt : public WindowWidget
+class Prompt : public guts::WindowWidget
 {
 public:
     // Constructs a prompt.  Can throw `std::runtime_error`.

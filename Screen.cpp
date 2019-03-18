@@ -21,13 +21,14 @@
 #include <curses.h>
 
 #include "guts/ColorManager.hpp"
-#include "Size.hpp"
-#include "Widget.hpp"
+#include "guts/Size.hpp"
+#include "guts/Widget.hpp"
 
 using namespace cursed;
+using namespace cursed::guts;
 
 // Retrieves size of the screen.
-static inline Size
+static inline guts::Size
 getSize()
 {
     Size size;

@@ -16,13 +16,13 @@
 // You should have received a copy of the GNU General Public License
 // along with libcursed.  If not, see <https://www.gnu.org/licenses/>.
 
-#ifndef LIBCURSED__WIDGET_HPP__
-#define LIBCURSED__WIDGET_HPP__
+#ifndef LIBCURSED__GUTS__WIDGET_HPP__
+#define LIBCURSED__GUTS__WIDGET_HPP__
 
 #include "Pos.hpp"
 #include "Size.hpp"
 
-namespace cursed {
+namespace cursed { namespace guts {
 
 // Base class for all widgets in the library.
 class Widget
@@ -56,6 +56,6 @@ inline void
 Widget::placed(Pos /*newPos*/, Size /*newSize*/)
 { }
 
-}
+} }
 
-#endif // LIBCURSED__WIDGET_HPP__
+#endif // LIBCURSED__GUTS__WIDGET_HPP__

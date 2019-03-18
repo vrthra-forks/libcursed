@@ -22,6 +22,7 @@
 #include <vector>
 
 using namespace cursed;
+using namespace cursed::guts;
 
 void
 Track::addItem(Widget *w)

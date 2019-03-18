@@ -23,17 +23,19 @@
 
 namespace cursed {
 
-class Widget;
+namespace guts {
+    class Widget;
+}
 
 // Provides information about the whole screen.
 class Screen
 {
 public:
     // Sets/updates top widget and stretches it over the whole screen.
-    void replaceTopWidget(Widget *w);
+    void replaceTopWidget(guts::Widget *w);
 
     // Pushes widget as the top one.
-    void pushMainWidget(Widget *w);
+    void pushMainWidget(guts::Widget *w);
     // Pops the top widget.
     void popMainWidget();
 
@@ -53,7 +55,7 @@ public:
 
 private:
     // Roots of all currently displayed layers of widgets.
-    std::vector<Widget *> mainWidgets;
+    std::vector<guts::Widget *> mainWidgets;
 };
 
 }

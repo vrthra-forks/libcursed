@@ -23,12 +23,10 @@
 
 #include "../ColorTree.hpp"
 
-namespace cursed {
+namespace cursed { namespace guts {
 
 class Pos;
 class Size;
-
-namespace guts {
 
 // Manages window resource.
 class Window
@@ -84,8 +82,6 @@ void (wmove)(Window &win, int y, int x);
 // Erases current line until its end.
 void (wclrtoeol)(Window &win);
 
-}
-
-}
+} }
 
 #endif // LIBCURSED__GUTS__WINDOW_HPP__

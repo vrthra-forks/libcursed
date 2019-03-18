@@ -16,17 +16,17 @@
 // You should have received a copy of the GNU General Public License
 // along with libcursed.  If not, see <https://www.gnu.org/licenses/>.
 
-#ifndef LIBCURSED__WINDOWWIDGET_HPP__
-#define LIBCURSED__WINDOWWIDGET_HPP__
+#ifndef LIBCURSED__GUTS__WINDOWWIDGET_HPP__
+#define LIBCURSED__GUTS__WINDOWWIDGET_HPP__
 
 #include <utility>
 
-#include "guts/Window.hpp"
 #include "Pos.hpp"
 #include "Size.hpp"
 #include "Widget.hpp"
+#include "Window.hpp"
 
-namespace cursed {
+namespace cursed { namespace guts {
 
 // Base class for all Window-based widgets in the library.
 class WindowWidget : public Widget
@@ -41,7 +41,7 @@ protected:
     virtual void placed(Pos newPos, Size newSize) override;
 
 protected:
-    guts::Window win; // Window object.
+    Window win; // Window object.
 };
 
 inline void
@@ -52,6 +52,6 @@ inline void
 WindowWidget::placed(Pos newPos, Size newSize)
 { win.place(newPos, newSize); }
 
-}
+} }
 
-#endif // LIBCURSED__WINDOWWIDGET_HPP__
+#endif // LIBCURSED__GUTS__WINDOWWIDGET_HPP__

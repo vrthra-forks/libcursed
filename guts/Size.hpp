@@ -16,23 +16,23 @@
 // You should have received a copy of the GNU General Public License
 // along with libcursed.  If not, see <https://www.gnu.org/licenses/>.
 
-#ifndef LIBCURSED__POS_HPP__
-#define LIBCURSED__POS_HPP__
+#ifndef LIBCURSED__GUTS__SIZE_HPP__
+#define LIBCURSED__GUTS__SIZE_HPP__
 
-namespace cursed {
+namespace cursed { namespace guts {
 
-// Represents position on the screen in characters.
-struct Pos
+// Represents size in characters.
+struct Size
 {
-    int x; // Offset along X axis.
-    int y; // Offset along Y axis.
+    int lines; // Number of lines.
+    int cols;  // Number of columns.
 
-    Pos() : x(0), y(0)
+    Size() : lines(0), cols(0)
     { }
-    Pos(int x, int y) : x(x), y(y)
+    Size(int lines, int cols) : lines(lines), cols(cols)
     { }
 };
 
-}
+} }
 
-#endif // LIBCURSED__POS_HPP__
+#endif // LIBCURSED__GUTS__SIZE_HPP__

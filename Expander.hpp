@@ -19,12 +19,12 @@
 #ifndef LIBCURSED__EXPANDER_HPP__
 #define LIBCURSED__EXPANDER_HPP__
 
-#include "Widget.hpp"
+#include "guts/Widget.hpp"
 
 namespace cursed {
 
 // Empty widget that takes up as much space as it can.
-class Expander : public Widget
+class Expander : public guts::Widget
 {
 private:
     // Updates state of this widget to be published on the screen.

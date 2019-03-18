@@ -24,9 +24,9 @@
 #include <utility>
 
 #include "../ColorTree.hpp"
-#include "../Pos.hpp"
-#include "../Size.hpp"
 #include "ColorManager.hpp"
+#include "Pos.hpp"
+#include "Size.hpp"
 
 using namespace cursed::guts;
 namespace guts = cursed::guts;

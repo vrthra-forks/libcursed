@@ -21,13 +21,13 @@
 
 #include <vector>
 
-#include "Widget.hpp"
+#include "guts/Widget.hpp"
 
 namespace cursed {
 
 // Organizes widgets it contains vertically taking their height policy into
 // account.
-class Track : public Widget
+class Track : public guts::Widget
 {
 public:
     // Adds item to this track.
@@ -35,7 +35,7 @@ public:
 
 public:
     // Performs position and size update.
-    virtual void place(Pos newPos, Size newSize) override;
+    virtual void place(guts::Pos newPos, guts::Size newSize) override;
 
 private:
     // Updates state of this widget to be published on the screen.
