@@ -20,7 +20,7 @@
 
 #include <curses.h>
 
-#include "ColorManager.hpp"
+#include "guts/ColorManager.hpp"
 #include "Size.hpp"
 #include "Widget.hpp"
 

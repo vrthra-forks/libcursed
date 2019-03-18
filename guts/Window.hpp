@@ -16,12 +16,12 @@
 // You should have received a copy of the GNU General Public License
 // along with libcursed.  If not, see <https://www.gnu.org/licenses/>.
 
-#ifndef LIBCURSED__WINDOW_HPP__
-#define LIBCURSED__WINDOW_HPP__
+#ifndef LIBCURSED__GUTS__WINDOW_HPP__
+#define LIBCURSED__GUTS__WINDOW_HPP__
 
 #include <cwctype>
 
-#include "ColorTree.hpp"
+#include "../ColorTree.hpp"
 
 namespace cursed {
 
@@ -88,4 +88,4 @@ void (wclrtoeol)(Window &win);
 
 }
 
-#endif // LIBCURSED__WINDOW_HPP__
+#endif // LIBCURSED__GUTS__WINDOW_HPP__

@@ -16,8 +16,8 @@
 // You should have received a copy of the GNU General Public License
 // along with libcursed.  If not, see <https://www.gnu.org/licenses/>.
 
-#ifndef LIBCURSED__COLORMANAGER_HPP__
-#define LIBCURSED__COLORMANAGER_HPP__
+#ifndef LIBCURSED__GUTS__COLORMANAGER_HPP__
+#define LIBCURSED__GUTS__COLORMANAGER_HPP__
 
 namespace cursed { namespace guts {
 
@@ -58,4 +58,4 @@ private:
 
 } }
 
-#endif // LIBCURSED__COLORMANAGER_HPP__
+#endif // LIBCURSED__GUTS__COLORMANAGER_HPP__

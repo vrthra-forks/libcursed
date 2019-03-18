@@ -21,10 +21,10 @@
 
 #include <utility>
 
+#include "guts/Window.hpp"
 #include "Pos.hpp"
 #include "Size.hpp"
 #include "Widget.hpp"
-#include "Window.hpp"
 
 namespace cursed {
 

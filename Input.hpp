@@ -21,7 +21,7 @@
 
 #include <cwctype>
 
-#include "Window.hpp"
+#include "guts/Window.hpp"
 
 namespace cursed {
 
