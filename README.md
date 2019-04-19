@@ -34,10 +34,10 @@ and can change quite a bit in the future.
 
 #### Throw-in library state ####
 
-There are no build system and nothing is getting built for the client.  To use
+There is no build system and nothing is getting built for the client.  To use
 it clone the repository (possibly as a submodule) and handle the building with
 the build system that's used by the main project.  Compile with C++11 enabled
-and link against `ncursesw`.
+and link against `cursesw`.
 
 ### Prerequisites ###
 
