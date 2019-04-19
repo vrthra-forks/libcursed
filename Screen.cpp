@@ -77,16 +77,16 @@ Screen::draw()
     doupdate();
 }
 
-void
+bool
 Screen::showCursor()
 {
-    curs_set(1);
+    return (curs_set(1) == 0);
 }
 
-void
+bool
 Screen::hideCursor()
 {
-    curs_set(0);
+    return (curs_set(0) != 0);
 }
 
 void

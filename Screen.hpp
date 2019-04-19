@@ -45,10 +45,12 @@ public:
     // Draws main widget and makes screen updates visible on physical screen.
     void draw();
 
-    // Makes cursor visible.
-    void showCursor();
-    // Makes cursor invisible.
-    void hideCursor();
+    // Makes cursor visible.  Returns `true` if cursor was hidden before the
+    // call.
+    bool showCursor();
+    // Makes cursor invisible.  Returns `true` if cursor was visible before the
+    // call.
+    bool hideCursor();
 
     // Hides current application's version of the screen.
     void stopTUI();
