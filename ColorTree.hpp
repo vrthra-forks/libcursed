@@ -35,6 +35,19 @@ namespace cursed {
 
 class ColorTree;
 
+// List of colors.
+enum class Color
+{
+    Black,
+    Red,
+    Green,
+    Yellow,
+    Blue,
+    Magenta,
+    Cyan,
+    White
+};
+
 // Describes formatting details for a piece of text.
 class Format
 {
@@ -63,6 +76,8 @@ public:
     // Sets foreground color (negative value means "no color").
     void setForeground(int color)
     { fg = (color < 0 ? -1 : color); }
+    // Sets named color as foreground.
+    void setForeground(Color color);
     // Retrieves foreground color.
     int getForeground() const
     { return fg; }
@@ -73,6 +88,8 @@ public:
     // Sets background color (negative value means "no color").
     void setBackground(int color)
     { bg = (color < 0 ? -1 : color); }
+    // Sets named color as background.
+    void setBackground(Color color);
     // Retrieves background color.
     int getBackground() const
     { return bg; }

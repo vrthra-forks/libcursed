@@ -21,7 +21,11 @@
 #include <stack>
 #include <utility>
 
+#include <curses.h>
+
 using namespace cursed;
+
+static int colorToInt(Color color);
 
 // Manages combining of multiple formats.  The idea is that formats are added to
 // the state when they become active and are removed after they become inactive.
@@ -101,6 +105,35 @@ private:
     int boldCounter = 0;       // Count bold attribute was encountered.
     int underlinedCounter = 0; // Count underline attribute was encountered.
 };
+
+void
+Format::setForeground(Color color)
+{
+    fg = colorToInt(color);
+}
+
+void
+Format::setBackground(Color color)
+{
+    bg = colorToInt(color);
+}
+
+// Maps member of the `Color` enumeration to curses color number.
+static int
+colorToInt(Color color)
+{
+    switch (color) {
+        case Color::Black:   return COLOR_BLACK;
+        case Color::Red:     return COLOR_RED;
+        case Color::Green:   return COLOR_GREEN;
+        case Color::Yellow:  return COLOR_YELLOW;
+        case Color::Blue:    return COLOR_BLUE;
+        case Color::Magenta: return COLOR_MAGENTA;
+        case Color::Cyan:    return COLOR_CYAN;
+        case Color::White:   return COLOR_WHITE;
+    }
+    return -1;
+}
 
 ColorTree
 Format::operator()(std::wstring text) const
