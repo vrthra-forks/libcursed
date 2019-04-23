@@ -146,6 +146,9 @@ public:
     // Invokes visitor per leaf node of the tree.
     void visit(const visitorFunc &visitor) const;
 
+    // Retrieves cumulative length of all pieces of the tree.
+    int length() const;
+
 private:
     Format format;                   // Format of the tree.
     std::wstring text;               // Text of a leaf.

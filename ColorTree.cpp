@@ -218,6 +218,31 @@ ColorTree::visit(const visitorFunc &visitor) const
     }
 }
 
+int
+ColorTree::length() const
+{
+    std::stack<const ColorTree *> trees;
+    trees.push(this);
+
+    int len = 0;
+    while (!trees.empty()) {
+        const ColorTree &tree = *trees.top();
+        trees.pop();
+
+        if (tree.branches.empty()) {
+            len += tree.text.length();
+        } else {
+            for (auto it = tree.branches.crbegin();
+                 it != tree.branches.crend();
+                 ++it) {
+                trees.push(&*it);
+            }
+        }
+    }
+
+    return len;
+}
+
 ColorTree
 cursed::operator+(ColorTree &&lhs, ColorTree &&rhs)
 {
