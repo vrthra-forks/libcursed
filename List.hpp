@@ -24,11 +24,12 @@
 
 #include "guts/WindowWidget.hpp"
 #include "ColorTree.hpp"
+#include "ListLike.hpp"
 
 namespace cursed {
 
 // A scrollable list of textual items.
-class List : public guts::WindowWidget
+class List : public guts::WindowWidget, public ListLike
 {
 public:
     // Constructs an empty list.  Can throw `std::runtime_error`.
@@ -44,23 +45,6 @@ public:
     void setItems(std::vector<ColorTree> newItems);
     // Updates an item at position (should be a valid index).
     void setItem(int pos, ColorTree newValue);
-
-    // Puts cursor on the first element.
-    void moveToFirst();
-    // Puts cursor on the last element.
-    void moveToLast();
-
-    // Moves cursor `by` elements down.
-    void moveDown(int by = 1);
-    // Moves cursor `by` elements up.
-    void moveUp(int by = 1);
-
-    // Moves cursor to the specified position (incorrect value is turned into
-    // closes bound).
-    void moveToPos(int newPos);
-
-    // Retrieves current position.
-    int getPos() const;
 
     // Returns value of the element under the cursor or an empty string for
     // empty list.
@@ -78,10 +62,11 @@ private:
     // Notifies widget of new position and size.
     virtual void placed(guts::Pos newPos, guts::Size newSize) override;
 
+    // Retrieves number of elements in the list.
+    virtual int getSize() const override;
+
 private:
     std::vector<ColorTree> items; // List of items.
-    int pos;                      // Current cursor position.
-    int top;                      // First element to display.
     int height;                   // Screen height.
     Format itemHi;                // Visual style of an item.
     Format currentHi;             // Visual style of the current item.

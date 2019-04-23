@@ -45,7 +45,7 @@ countWidth(int n)
     return width;
 }
 
-List::List() : pos(0), top(0), height(0)
+List::List() : height(0)
 {
     currentHi.setReversed(true);
     currentHi.setForeground(Color::Yellow);
@@ -55,64 +55,13 @@ void
 List::setItems(std::vector<ColorTree> newItems)
 {
     items = std::move(newItems);
-    top = 0;
-    pos = 0;
+    ListLike::reset();
 }
 
 void
 List::setItem(int pos, ColorTree newValue)
 {
     items[pos] = std::move(newValue);
-}
-
-void
-List::moveToFirst()
-{
-    pos = 0;
-}
-
-void
-List::moveToLast()
-{
-    pos = static_cast<int>(items.size()) - 1;
-}
-
-void
-List::moveDown(int by)
-{
-    assert(by > 0 && "Argument must be > 0.");
-    pos += by;
-    if (pos > static_cast<int>(items.size()) - 1) {
-        pos = static_cast<int>(items.size()) - 1;
-    }
-}
-
-void
-List::moveUp(int by)
-{
-    assert(by > 0 && "Argument must be > 0.");
-    pos -= by;
-    if (pos < 0) {
-        pos = 0;
-    }
-}
-
-void
-List::moveToPos(int newPos)
-{
-    if (newPos < 0) {
-        newPos = 0;
-    }
-    if (newPos >= static_cast<int>(items.size()) - 1) {
-        newPos = items.size() - 1;
-    }
-    pos = newPos;
-}
-
-int
-List::getPos() const
-{
-    return pos;
 }
 
 std::wstring
@@ -123,8 +72,8 @@ List::getCurrent() const
     }
 
     std::wstring current;
-    items[pos].visit([&current](const std::wstring &text,
-                                const Format &/*format*/) {
+    items[getPos()].visit([&current](const std::wstring &text,
+                                     const Format &/*format*/) {
         current += text;
     });
     return current;
@@ -134,24 +83,19 @@ void
 List::draw()
 {
     if (items.empty()) {
-        top = 0;
-        pos = 0;
+        ListLike::reset();
 
         win.erase();
         wnoutrefresh(win);
         return;
     }
 
-    if (pos < top) {
-        top = pos;
-    } else if (pos >= top + height) {
-        top = pos - (height - 1);
-    }
-
     int lineNumWidth = countWidth(items.size());
 
     win.erase();
     int line = 0;
+    int top = updateTop(height);
+    int pos = getPos();
     for (int i = top; i < top + height; ++i, ++line) {
         if (i == static_cast<int>(items.size())) {
             break;
@@ -184,4 +128,10 @@ List::placed(Pos newPos, Size newSize)
 {
     WindowWidget::placed(newPos, newSize);
     height = newSize.lines;
+}
+
+int
+List::getSize() const
+{
+    return items.size();
 }
