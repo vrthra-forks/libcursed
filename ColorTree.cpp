@@ -183,6 +183,12 @@ ColorTree::ColorTree(std::wstring text, Format format)
 void
 ColorTree::append(ColorTree &&branch)
 {
+    if (!text.empty()) {
+        // A child is being added to a leaf, turn contents into a child first.
+        branches.emplace_back(std::move(text), format);
+        text = std::wstring();
+        format = Format();
+    }
     branches.emplace_back(std::move(branch));
 }
 
