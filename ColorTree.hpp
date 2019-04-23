@@ -134,7 +134,7 @@ public:
     ColorTree(std::wstring text);
     // Constructs a leaf node with specified text specified as a literal.
     template <std::size_t N>
-    ColorTree(const wchar_t (&text)[N]) : text(text, text + N)
+    ColorTree(const wchar_t (&text)[N]) : text(text, text + N - 1)
     { }
     // Constructs a leaf node with specified text and format.
     ColorTree(std::wstring text, Format format);
@@ -161,7 +161,7 @@ template <std::size_t N>
 ColorTree
 Format::operator()(const wchar_t (&text)[N])
 {
-    return (*this)(std::wstring(text, text + N));
+    return (*this)(std::wstring(text, text + N - 1));
 }
 
 }
