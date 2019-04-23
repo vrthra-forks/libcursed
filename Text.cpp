@@ -32,6 +32,7 @@ void
 Text::setLines(std::vector<ColorTree> newLines)
 {
     lines = std::move(newLines);
+    scrollToTop();
 }
 
 void
