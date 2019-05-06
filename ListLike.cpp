@@ -93,5 +93,9 @@ ListLike::updateTop(int height)
     } else if (pos >= top + height) {
         top = pos - (height - 1);
     }
+
+    if (top < 0) {
+        top = 0;
+    }
     return top;
 }
