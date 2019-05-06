@@ -139,18 +139,25 @@ private:
 
 static const std::wstring gap = L"  ";
 
-Table::Table(std::vector<TableHeader> headings) : maxWidth(0), height(0)
+Table::Table() : maxWidth(0), height(0)
 {
     currentHi.setReversed(true);
     currentHi.setForeground(Color::Yellow);
-
-    for (unsigned int i = 0U; i < headings.size(); ++i) {
-        cols.emplace_back(i, std::move(headings[i].label),
-                          headings[i].alignment == Align::Left);
-    }
 }
 
 Table::~Table() = default;
+
+void
+Table::addColumn(TableHeader heading)
+{
+    if (!items.empty()) {
+        throw std::invalid_argument("Can't change columns for non-empty "
+                                    "table.");
+    }
+
+    bool alignLeft = heading.alignment == Align::Left;
+    cols.emplace_back(cols.size(), std::move(heading.label), alignLeft);
+}
 
 void
 Table::append(const std::vector<ColorTree> &item)

@@ -50,12 +50,14 @@ class Table : public guts::WindowWidget, public ListLike
     class Column;
 
 public:
-    // Initializes the table with a list of columns.
-    Table(std::vector<TableHeader> headings);
+    // Initializes an empty table.
+    Table();
     // Emit destructing code in corresponding source file.
     ~Table();
 
 public:
+    // Adds a column.  Throws std::runtime_error if list of items isn't empty.
+    void addColumn(TableHeader heading);
     // Adds a row.  Throws std::invalid_argument if item length doesn't match
     // columns.
     void append(const std::vector<ColorTree> &item);
