@@ -1,6 +1,6 @@
 **libcursed**, _2019_
 
-_This file last updated on 24 April, 2019_
+_This file last updated on 6 May, 2019_
 
 ### Brief Description ###
 
@@ -65,15 +65,16 @@ There are three main structural elements:
 
 #### Widgets ####
 
-| Name     | Description
-|----------|-------------
-| Expander | non-drawing widget that takes up as much space as possible
-| Label    | static text field
-| List     | list of items
-| Prompt   | text field that displays cursor
-| Table    | multicolumn list
-| Text     | static text area
-| Track    | container that organizes widgets vertically
+| Name        | Description
+|-------------|-------------
+| Expander    | non-drawing widget that takes up as much space as possible
+| Label       | static text field
+| List        | list of items
+| Placeholder | proxy container who redirects all calls to a client widget
+| Prompt      | text field that displays cursor
+| Table       | multicolumn list
+| Text        | static text area
+| Track       | container that organizes widgets vertically
 
 #### Layers ####
 
