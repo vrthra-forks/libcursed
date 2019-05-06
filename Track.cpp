@@ -102,10 +102,10 @@ Track::desiredHeight()
     }
 
     if (minHeight == 0) {
-        // There are not flexible items, so return the exact part.
+        // There are no flexible items, so return the exact part.
         return exactHeight;
     }
     // Add exact part to minimal sizes of flexible items to get a lower bound
     // for size.
-    return minHeight - exactHeight;
+    return -(minHeight + exactHeight);
 }
