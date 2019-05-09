@@ -18,6 +18,7 @@
 
 #include "ColorTree.hpp"
 
+#include <sstream>
 #include <stack>
 #include <utility>
 
@@ -26,6 +27,7 @@
 using namespace cursed;
 
 static int colorToInt(Color color);
+static ColorTree fromEscapeCodes(const std::wstring &line, std::size_t offset);
 
 // Manages combining of multiple formats.  The idea is that formats are added to
 // the state when they become active and are removed after they become inactive.
@@ -196,6 +198,83 @@ ColorTree::ColorTree(std::wstring text) : text(std::move(text))
 ColorTree::ColorTree(std::wstring text, Format format)
     : format(std::move(format)), text(std::move(text))
 { }
+
+ColorTree
+ColorTree::fromEscapeCodes(const std::wstring &line)
+{
+    return ::fromEscapeCodes(line, 0);
+}
+
+// Builds a ColorTree out of a substring of its argument starting with offset by
+// parsing escape codes.
+static ColorTree
+fromEscapeCodes(const std::wstring &line, std::size_t offset)
+{
+    if (line.empty() || offset == line.length()) {
+        return {};
+    }
+
+    auto start = line.find(L'\033', offset);
+    if (start == std::wstring::npos || line[start + 1] != L'[') {
+        return line.substr(offset);
+    }
+
+    auto end = line.find(L'm', start + 2);
+    if (end == std::wstring::npos) {
+        return line.substr(offset);
+    }
+
+    std::wistringstream iwss(line.substr(start + 2, end - start - 1));
+    int n;
+    wchar_t separator;
+    cursed::Format fmt;
+    while (iwss >> n >> separator) {
+        if (n == 0) {
+            fmt.setStandalone(true);
+        } else if (n == 1) {
+            fmt.setBold(true);
+        } else if (n == 4 || n == 24) {
+            fmt.setUnderlined(n == 4);
+        } else if (n == 7 || n == 27) {
+            fmt.setReversed(n == 7);
+        } else if (n == 22) {
+            fmt.setBold(false);
+            fmt.setUnderlined(false);
+            fmt.setReversed(false);
+        } else if (n >= 30 && n <= 37) {
+            fmt.setForeground(n - 30);
+        } else if (n >= 40 && n <= 47) {
+            fmt.setBackground(n - 40);
+        } else if (n == 39) {
+            fmt.setForeground(-1);
+        } else if (n == 49) {
+            fmt.setBackground(-1);
+        } else if (n == 38) {
+            int nn;
+            wchar_t ss;
+            if (iwss >> nn >> ss >> n >> separator) {
+                if (nn == 5) {
+                    fmt.setForeground(n);
+                }
+            }
+        } else if (n == 48) {
+            int nn;
+            wchar_t ss;
+            if (iwss >> nn >> ss >> n >> separator) {
+                if (nn == 5) {
+                    fmt.setBackground(n);
+                }
+            }
+        }
+
+        if (separator == L'm') {
+            return line.substr(offset, start - offset)
+                 + fmt(fromEscapeCodes(line, end + 1));
+        }
+    }
+
+    return line.substr(offset);
+}
 
 void
 ColorTree::append(ColorTree &&branch)

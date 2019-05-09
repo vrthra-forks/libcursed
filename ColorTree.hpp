@@ -148,6 +148,10 @@ public:
     ColorTree(std::wstring text, Format format);
 
 public:
+    // Builds an instance out of a string with escape codes.
+    static ColorTree fromEscapeCodes(const std::wstring &line);
+
+public:
     // Extends tree by appending another branch to it.
     void append(ColorTree &&branch);
 
