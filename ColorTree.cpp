@@ -43,6 +43,12 @@ public:
     // Adds a format.
     FormatState & operator+=(const Format &format)
     {
+        if (format.isStandalone()) {
+            previous.push(current);
+            current = {};
+            return *this;
+        }
+
         if (format.isBold()) {
             if (boldCounter++ == 0) {
                 current.setBold(true);
@@ -70,6 +76,12 @@ public:
     // Subtracts a format.
     FormatState & operator-=(const Format &format)
     {
+        if (format.isStandalone()) {
+            current = previous.top();
+            previous.pop();
+            return *this;
+        }
+
         if (format.isBold()) {
             if (--boldCounter == 0) {
                 current.setBold(false);
@@ -100,6 +112,7 @@ public:
 
 private:
     Format current;            // Current format.
+    std::stack<Format> previous; // Previous formats.
     std::stack<int> fg;        // Stack of active foreground colors.
     std::stack<int> bg;        // Stack of active background colors.
     int boldCounter = 0;       // Count bold attribute was encountered.
@@ -152,6 +165,10 @@ Format::operator()(ColorTree &&tree) const
 Format &
 cursed::operator+=(Format &lhs, const Format &rhs)
 {
+    if (rhs.isStandalone()) {
+        lhs = {};
+    }
+
     if (rhs.isBold()) {
         lhs.setBold(true);
     }

@@ -73,6 +73,13 @@ public:
     bool isUnderlined() const
     { return underlined; }
 
+    // Sets whether this format should not be mixed in with parent formats.
+    void setStandalone(bool isStandalone)
+    { standalone = isStandalone; }
+    // Checks whether this format should not be mixed in with parent formats.
+    bool isStandalone() const
+    { return standalone; }
+
     // Sets foreground color (negative value means "no color").
     void setForeground(int color)
     { fg = (color < 0 ? -1 : color); }
@@ -111,6 +118,7 @@ private:
     bool bold = false;       // Whether text is bold.
     bool reversed = false;   // Whether text has reversed colors.
     bool underlined = false; // Whether text is underlined.
+    bool standalone = false; // Whether this format should be mixed to parent.
 };
 
 // Mixes one format with another.
