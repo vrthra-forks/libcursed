@@ -261,7 +261,7 @@ Table::printTableHeader()
 void
 Table::printTableRows()
 {
-    int top = updateTop(height - 1);
+    int top = getTop();
     int nItems = items.size();
     int pos = getPos();
     for (int i = top; i < top + height - 1; ++i) {
@@ -340,6 +340,12 @@ int
 Table::getSize() const
 {
     return items.size();
+}
+
+int
+Table::getHeight() const
+{
+    return height - 1;
 }
 
 // Calculates width of a string on the screen.

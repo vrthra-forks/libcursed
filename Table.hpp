@@ -89,6 +89,9 @@ private:
     // Retrieves number of elements in the list.
     virtual int getSize() const override;
 
+    // Retrieves viewport height.
+    virtual int getHeight() const override;
+
 private:
     // Maximum allowed table width.
     unsigned int maxWidth;

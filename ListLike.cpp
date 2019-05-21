@@ -86,8 +86,10 @@ ListLike::reset()
 }
 
 int
-ListLike::updateTop(int height)
+ListLike::getTop()
 {
+    int height = getHeight();
+
     if (pos < top) {
         top = pos;
     } else if (pos >= top + height) {

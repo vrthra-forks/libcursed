@@ -49,12 +49,15 @@ public:
 protected:
     // Resets scroll and cursor positions.
     void reset();
-    // Recomputes scroll position based on viewport height and returns it.
-    int updateTop(int height);
+    // Retrieves scroll position.
+    int getTop();
 
 private:
     // Retrieves number of elements in the list.
     virtual int getSize() const = 0;
+
+    // Retrieves viewport height.
+    virtual int getHeight() const = 0;
 
 private:
     int pos; // Current cursor position.

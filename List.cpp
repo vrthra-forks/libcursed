@@ -94,7 +94,7 @@ List::draw()
 
     win.erase();
     int line = 0;
-    int top = updateTop(height);
+    int top = getTop();
     int pos = getPos();
     for (int i = top; i < top + height; ++i, ++line) {
         if (i == static_cast<int>(items.size())) {
@@ -134,4 +134,10 @@ int
 List::getSize() const
 {
     return items.size();
+}
+
+int
+List::getHeight() const
+{
+    return height;
 }

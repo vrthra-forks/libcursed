@@ -65,6 +65,9 @@ private:
     // Retrieves number of elements in the list.
     virtual int getSize() const override;
 
+    // Retrieves viewport height.
+    virtual int getHeight() const override;
+
 private:
     std::vector<ColorTree> items; // List of items.
     int height;                   // Screen height.
