@@ -72,6 +72,39 @@ ListLike::moveToPos(int newPos)
     pos = newPos;
 }
 
+void
+ListLike::scrollDown()
+{
+    ++top;
+
+    int size = getSize();
+    int height = getHeight();
+    if (top > size - height) {
+        top = size - height;
+        if (top < 0) {
+            top = 0;
+        }
+    }
+
+    if (pos < top) {
+        pos = top;
+    }
+}
+
+void
+ListLike::scrollUp()
+{
+    --top;
+    if (top < 0) {
+        top = 0;
+    }
+
+    int height = getHeight();
+    if (pos >= top + height) {
+        pos = top + height - 1;
+    }
+}
+
 int
 ListLike::getPos() const
 {

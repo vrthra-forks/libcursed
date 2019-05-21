@@ -43,6 +43,13 @@ public:
     // closes bound).
     void moveToPos(int newPos);
 
+    // Scrolls text one line down.  If current position ends up being outside of
+    // viewport, it's adjusted to be visible.
+    void scrollDown();
+    // Scrolls text one line up.  If current position ends up being outside of
+    // viewport, it's adjusted to be visible.
+    void scrollUp();
+
     // Retrieves current position.
     int getPos() const;
 
