@@ -31,3 +31,9 @@ Expander::desiredHeight()
 {
     return std::numeric_limits<int>::min();
 }
+
+int
+Expander::desiredWidth()
+{
+    return std::numeric_limits<int>::min();
+}

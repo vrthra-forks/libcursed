@@ -109,3 +109,26 @@ Track::desiredHeight()
     // for size.
     return -(minHeight + exactHeight);
 }
+
+int
+Track::desiredWidth()
+{
+    int minWidth = 0;
+    int exactWidth = 0;
+    for (Widget *w : widgets) {
+        int neededWidth = w->desiredWidth();
+        if (neededWidth < 0) {
+            minWidth += -neededWidth;
+        } else {
+            exactWidth += neededWidth;
+        }
+    }
+
+    if (minWidth == 0) {
+        // There are no flexible items, so return the exact part.
+        return exactWidth;
+    }
+    // Add exact part to minimal sizes of flexible items to get a lower bound
+    // for size.
+    return -(minWidth + exactWidth);
+}

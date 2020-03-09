@@ -48,6 +48,15 @@ Placeholder::desiredHeight()
     return std::numeric_limits<int>::min();
 }
 
+int
+Placeholder::desiredWidth()
+{
+    if (widget != nullptr) {
+        return widget->desiredWidth();
+    }
+    return std::numeric_limits<int>::min();
+}
+
 void
 Placeholder::placed(guts::Pos newPos, guts::Size newSize)
 {

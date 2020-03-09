@@ -95,6 +95,12 @@ Text::desiredHeight()
     return -1;
 }
 
+int
+Text::desiredWidth()
+{
+    return -1;
+}
+
 void
 Text::placed(Pos newPos, Size newSize)
 {

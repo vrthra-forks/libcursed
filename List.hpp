@@ -58,6 +58,10 @@ private:
     // Positive number or zero means exactly that much.
     // Negative number means at least that much in magnitude.
     virtual int desiredHeight() override;
+    // Retrieves horizontal size policy.
+    // Positive number or zero means exactly that much.
+    // Negative number means at least that much in magnitude.
+    virtual int desiredWidth() override;
 
     // Notifies widget of new position and size.
     virtual void placed(guts::Pos newPos, guts::Size newSize) override;

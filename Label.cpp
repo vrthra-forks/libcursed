@@ -25,12 +25,25 @@
 using namespace cursed;
 
 Label::Label(ColorTree initText) : text(std::move(initText))
-{ }
+{
+    computeWidth();
+}
 
 void
 Label::setText(ColorTree newText)
 {
     text = std::move(newText);
+    computeWidth();
+}
+
+void
+Label::computeWidth()
+{
+    int newWidth = 0;
+    text.visit([&newWidth](const std::wstring &text, const Format &/*format*/) {
+        newWidth += text.length();
+    });
+    width = newWidth;
 }
 
 void
@@ -46,4 +59,10 @@ int
 Label::desiredHeight()
 {
     return 1;
+}
+
+int
+Label::desiredWidth()
+{
+    return -width;
 }

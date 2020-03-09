@@ -18,6 +18,7 @@
 
 #include "Prompt.hpp"
 
+#include <limits>
 #include <utility>
 
 using namespace cursed;
@@ -46,4 +47,10 @@ int
 Prompt::desiredHeight()
 {
     return 1;
+}
+
+int
+Prompt::desiredWidth()
+{
+    return std::numeric_limits<int>::min();
 }

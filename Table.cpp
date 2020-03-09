@@ -328,6 +328,12 @@ Table::desiredHeight()
     return -1;
 }
 
+int
+Table::desiredWidth()
+{
+    return -1;
+}
+
 void
 Table::placed(Pos newPos, Size newSize)
 {

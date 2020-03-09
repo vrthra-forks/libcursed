@@ -123,6 +123,12 @@ List::desiredHeight()
     return -1;
 }
 
+int
+List::desiredWidth()
+{
+    return -1;
+}
+
 void
 List::placed(Pos newPos, Size newSize)
 {

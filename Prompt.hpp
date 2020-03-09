@@ -48,6 +48,10 @@ private:
     // Positive number or zero means exactly that much.
     // Negative number means at least that much in magnitude.
     virtual int desiredHeight() override;
+    // Retrieves horizontal size policy.
+    // Positive number or zero means exactly that much.
+    // Negative number means at least that much in magnitude.
+    virtual int desiredWidth() override;
 
 private:
     ColorTree text; // Text of the prompt.

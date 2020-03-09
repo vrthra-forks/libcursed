@@ -42,6 +42,10 @@ public:
     // Positive number or zero means exactly that much.
     // Negative number means at least that much in magnitude.
     virtual int desiredHeight() = 0;
+    // Retrieves horizontal size policy.
+    // Positive number or zero means exactly that much.
+    // Negative number means at least that much in magnitude.
+    virtual int desiredWidth() = 0;
 
 private:
     // Notifies widget of new position and size.

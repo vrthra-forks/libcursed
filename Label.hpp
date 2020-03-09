@@ -41,6 +41,9 @@ public:
     void setText(ColorTree newText);
 
 private:
+    // Actualizes the `width` field.
+    void computeWidth();
+
     // Updates state of this widget to be published on the screen.
     virtual void draw() override;
 
@@ -48,9 +51,14 @@ private:
     // Positive number or zero means exactly that much.
     // Negative number means at least that much in magnitude.
     virtual int desiredHeight() override;
+    // Retrieves horizontal size policy.
+    // Positive number or zero means exactly that much.
+    // Negative number means at least that much in magnitude.
+    virtual int desiredWidth() override;
 
 private:
-    ColorTree text;   // Text of the label.
+    ColorTree text; // Text of the label.
+    int width;      // Width of the text.
 };
 
 }
