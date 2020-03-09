@@ -24,6 +24,12 @@
 using namespace cursed;
 using namespace cursed::guts;
 
+// Boundary to narrow range of values to avoid integer overflows.
+constexpr int Range = 10000;
+
+Track::Track(Orientation orientation) : orientation(orientation)
+{ }
+
 void
 Track::addItem(Widget *w)
 {
@@ -33,9 +39,16 @@ Track::addItem(Widget *w)
 void
 Track::place(Pos newPos, Size newSize)
 {
-    // Narrow range of values to avoid integer overflows.
-    const int Range = 10000;
+    if (orientation == Orientation::Vertical) {
+        placeVertically(newPos, newSize);
+    } else {
+        placeHorizontally(newPos, newSize);
+    }
+}
 
+void
+Track::placeVertically(Pos newPos, Size newSize)
+{
     int nFlexible = 0;
     int booked = 0;
     std::vector<int> needed;
@@ -76,6 +89,51 @@ Track::place(Pos newPos, Size newSize)
     for (unsigned int i = 0U; i < sizes.size(); ++i) {
         widgets[i]->place(newPos, sizes[i]);
         newPos.y += sizes[i].lines;
+    }
+}
+
+void
+Track::placeHorizontally(Pos newPos, Size newSize)
+{
+    int nFlexible = 0;
+    int booked = 0;
+    std::vector<int> needed;
+
+    std::vector<Size> sizes;
+    sizes.reserve(widgets.size());
+
+    // Place items with fixed size.
+    for (Widget *w : widgets) {
+        int neededWidth = std::max(std::min(w->desiredWidth(), Range), -Range);
+        needed.push_back(neededWidth);
+
+        if (neededWidth < 0) {
+            ++nFlexible;
+            booked += -neededWidth;
+            sizes.emplace_back();
+        } else {
+            sizes.emplace_back(newSize.lines, neededWidth);
+            newSize.cols -= neededWidth;
+        }
+    }
+
+    // Place flexible items giving them share of extra space.
+    int extraFraction = (nFlexible != 0) ? (newSize.cols - booked)/nFlexible
+                                         : 0;
+    for (unsigned int i = 0U; i < needed.size(); ++i) {
+        if (needed[i] < 0) {
+            --nFlexible;
+            int width = (nFlexible == 0) ? newSize.cols
+                                         : -needed[i] + extraFraction;
+            sizes[i] = Size(newSize.lines, width);
+            newSize.cols -= width;
+        }
+    }
+
+    // Apply placement results.
+    for (unsigned int i = 0U; i < sizes.size(); ++i) {
+        widgets[i]->place(newPos, sizes[i]);
+        newPos.x += sizes[i].cols;
     }
 }
 

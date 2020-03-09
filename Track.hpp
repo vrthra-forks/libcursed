@@ -25,10 +25,21 @@
 
 namespace cursed {
 
+// How to position widgets within a track.
+enum class Orientation
+{
+    Horizontal, // From left to right.
+    Vertical    // From top to bottom.
+};
+
 // Organizes widgets it contains vertically taking their height policy into
 // account.
 class Track : public guts::Widget
 {
+public:
+    // Constructs a track of specified orientation.
+    explicit Track(Orientation orientation = Orientation::Vertical);
+
 public:
     // Adds item to this track.
     void addItem(Widget *w);
@@ -38,6 +49,11 @@ public:
     virtual void place(guts::Pos newPos, guts::Size newSize) override;
 
 private:
+    // Performs position and size update for vertical orientation.
+    void placeVertically(guts::Pos newPos, guts::Size newSize);
+    // Performs position and size update for horizontal orientation.
+    void placeHorizontally(guts::Pos newPos, guts::Size newSize);
+
     // Updates state of this widget to be published on the screen.
     virtual void draw() override;
 
@@ -51,6 +67,7 @@ private:
     virtual int desiredWidth() override;
 
 private:
+    Orientation orientation;       // Which way to layout widgets.
     std::vector<Widget *> widgets; // Child widgets of this track.
 };
 

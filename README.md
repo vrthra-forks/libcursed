@@ -1,6 +1,6 @@
-**libcursed**, _2019_
+**libcursed**, _2019 -- 2020_
 
-_This file last updated on 6 May, 2019_
+_This file last updated on 9 March, 2020_
 
 ### Brief Description ###
 
@@ -74,7 +74,7 @@ There are three main structural elements:
 | Prompt      | text field that displays cursor
 | Table       | multicolumn list
 | Text        | static text area
-| Track       | container that organizes widgets vertically
+| Track       | container that organizes widgets vertically or horizontally
 
 #### Layers ####
 
