@@ -106,7 +106,7 @@ List::draw()
 
         std::wostringstream oss;
         oss << L' '
-            << std::setw(lineNumWidth) << i + 1 << L": ";
+            << std::setw(lineNumWidth) << std::to_wstring(i + 1) << L": ";
 
         Format hi = itemHi;
         if (i == pos) {
