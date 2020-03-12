@@ -70,6 +70,8 @@ Screen::resize()
 void
 Screen::draw()
 {
+    werase(stdscr);
+
     guts::ColorManager::get().reset();
     for (Widget *widget : mainWidgets) {
         widget->draw();
