@@ -24,6 +24,9 @@
 using namespace cursed;
 using namespace cursed::guts;
 
+static std::vector<int> doLayout(const std::vector<int> &lengths, int max);
+static int calculateDesired(const std::vector<int> &lengths);
+
 // Boundary to narrow range of values to avoid integer overflows.
 constexpr int Range = 10000;
 
@@ -49,92 +52,97 @@ Track::place(Pos newPos, Size newSize)
 void
 Track::placeVertically(Pos newPos, Size newSize)
 {
-    int nFlexible = 0;
-    int booked = 0;
-    std::vector<int> needed;
-
-    std::vector<Size> sizes;
-    sizes.reserve(widgets.size());
-
-    // Place items with fixed size.
+    std::vector<int> lengths;
+    lengths.reserve(widgets.size());
     for (Widget *w : widgets) {
-        int neededHeight = std::max(std::min(w->desiredHeight(), Range),
-                                    -Range);
-        needed.push_back(neededHeight);
-
-        if (neededHeight < 0) {
-            ++nFlexible;
-            booked += -neededHeight;
-            sizes.emplace_back();
-        } else {
-            sizes.emplace_back(neededHeight, newSize.cols);
-            newSize.lines -= neededHeight;
-        }
+        lengths.push_back(w->desiredHeight());
     }
 
-    // Place flexible items giving them share of extra space.
-    int extraFraction = (nFlexible != 0) ? (newSize.lines - booked)/nFlexible
-                                         : 0;
-    for (unsigned int i = 0U; i < needed.size(); ++i) {
-        if (needed[i] < 0) {
-            --nFlexible;
-            int height = (nFlexible == 0) ? newSize.lines
-                                          : -needed[i] + extraFraction;
-            sizes[i] = Size(height, newSize.cols);
-            newSize.lines -= height;
-        }
-    }
+    lengths = doLayout(lengths, newSize.lines);
 
     // Apply placement results.
-    for (unsigned int i = 0U; i < sizes.size(); ++i) {
-        widgets[i]->place(newPos, sizes[i]);
-        newPos.y += sizes[i].lines;
+    for (unsigned int i = 0U; i < lengths.size(); ++i) {
+        widgets[i]->place(newPos, Size(lengths[i], newSize.cols));
+        newPos.y += lengths[i];
     }
 }
 
 void
 Track::placeHorizontally(Pos newPos, Size newSize)
 {
+    std::vector<int> lengths;
+    lengths.reserve(widgets.size());
+    for (Widget *w : widgets) {
+        lengths.push_back(w->desiredWidth());
+    }
+
+    lengths = doLayout(lengths, newSize.cols);
+
+    // Apply placement results.
+    for (unsigned int i = 0U; i < lengths.size(); ++i) {
+        widgets[i]->place(newPos, Size(newSize.lines, lengths[i]));
+        newPos.x += lengths[i];
+    }
+}
+
+// Performs distribution of `max` units among widgets that want specified
+// lengths.
+static std::vector<int>
+doLayout(const std::vector<int> &lengths, int max)
+{
     int nFlexible = 0;
     int booked = 0;
-    std::vector<int> needed;
 
-    std::vector<Size> sizes;
-    sizes.reserve(widgets.size());
+    std::vector<int> layout;
+    int lengthLeft = max;
 
-    // Place items with fixed size.
-    for (Widget *w : widgets) {
-        int neededWidth = std::max(std::min(w->desiredWidth(), Range), -Range);
-        needed.push_back(neededWidth);
+    auto getBooked = [](int len) { return (len <= -Range ? 1 : -len); };
 
-        if (neededWidth < 0) {
+    for (int length : lengths) {
+        length = std::max(std::min(length, Range), -Range);
+
+        if (length < 0) {
             ++nFlexible;
-            booked += -neededWidth;
-            sizes.emplace_back();
+            booked += getBooked(length);
+            layout.emplace_back();
         } else {
-            sizes.emplace_back(newSize.lines, neededWidth);
-            newSize.cols -= neededWidth;
+            layout.emplace_back(length);
+            lengthLeft = std::max(0, lengthLeft - length);
         }
+    }
+
+    if (lengthLeft < booked) {
+        int have = lengthLeft;
+        int left = nFlexible;
+        for (unsigned int i = 0U; i < lengths.size(); ++i) {
+            if (lengths[i] < 0) {
+                int length = getBooked(lengths[i]);
+
+                --left;
+                layout[i] = (left == 0)
+                          ? have
+                          : lengthLeft*(float(length)/booked);
+                have -= layout[i];
+            }
+        }
+        return layout;
     }
 
     // Place flexible items giving them share of extra space.
-    int extraFraction = (nFlexible != 0) ? (newSize.cols - booked)/nFlexible
-                                         : 0;
-    for (unsigned int i = 0U; i < needed.size(); ++i) {
-        if (needed[i] < 0) {
+    int extraFraction = (nFlexible != 0)
+                      ? (lengthLeft - booked)/nFlexible
+                      : 0;
+    for (unsigned int i = 0U; i < lengths.size(); ++i) {
+        if (lengths[i] < 0) {
             --nFlexible;
-            int width = (nFlexible == 0) ? newSize.cols
-                                         : -needed[i] + extraFraction;
-            sizes[i] = Size(newSize.lines, width);
-            newSize.cols -= width;
+            layout[i] = (nFlexible == 0)
+                      ? lengthLeft
+                      : std::min(lengthLeft, -lengths[i] + extraFraction);
+            lengthLeft -= layout[i];
         }
     }
 
-    // Apply placement results.
-    for (unsigned int i = 0U; i < sizes.size(); ++i) {
-        widgets[i]->place(newPos, sizes[i]);
-        newPos.x += sizes[i].cols;
-    }
+    return layout;
 }
 
 void
@@ -148,45 +156,39 @@ Track::draw()
 int
 Track::desiredHeight()
 {
-    int minHeight = 0;
-    int exactHeight = 0;
+    std::vector<int> lengths;
+    lengths.reserve(widgets.size());
     for (Widget *w : widgets) {
-        int neededHeight = w->desiredHeight();
-        if (neededHeight < 0) {
-            minHeight += -neededHeight;
-        } else {
-            exactHeight += neededHeight;
-        }
+        lengths.push_back(w->desiredHeight());
     }
-
-    if (minHeight == 0) {
-        // There are no flexible items, so return the exact part.
-        return exactHeight;
-    }
-    // Add exact part to minimal sizes of flexible items to get a lower bound
-    // for size.
-    return -(minHeight + exactHeight);
+    return calculateDesired(lengths);
 }
 
 int
 Track::desiredWidth()
 {
-    int minWidth = 0;
-    int exactWidth = 0;
+    std::vector<int> lengths;
+    lengths.reserve(widgets.size());
     for (Widget *w : widgets) {
-        int neededWidth = w->desiredWidth();
-        if (neededWidth < 0) {
-            minWidth += -neededWidth;
-        } else {
-            exactWidth += neededWidth;
+        lengths.push_back(w->desiredWidth());
+    }
+    return calculateDesired(lengths);
+}
+
+// Calculates desired length of the track based on desired lengths of widgets.
+static int
+calculateDesired(const std::vector<int> &lengths)
+{
+    int minLength = 0;
+    int sign = 1;
+    for (int length : lengths) {
+        length = std::max(std::min(length, Range), -Range);
+        if (length != -Range) {
+            minLength = std::max(minLength, std::abs(length));
+            if (length < 0) {
+                sign = -1;
+            }
         }
     }
-
-    if (minWidth == 0) {
-        // There are no flexible items, so return the exact part.
-        return exactWidth;
-    }
-    // Add exact part to minimal sizes of flexible items to get a lower bound
-    // for size.
-    return -(minWidth + exactWidth);
+    return sign*minLength;
 }
