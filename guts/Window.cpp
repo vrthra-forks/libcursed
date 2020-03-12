@@ -76,7 +76,7 @@ w(void *ptr)
     return static_cast<WINDOW *>(ptr);
 }
 
-Window::Window()
+Window::Window() : hidden(false)
 {
     ptr = newwin(0, 0, 0, 0);
     if (ptr == nullptr) {
@@ -92,6 +92,11 @@ Window::~Window()
 void
 Window::place(Pos newPos, Size newSize)
 {
+    hidden = (newSize.lines == 0 || newSize.cols == 0);
+    if (hidden) {
+        return;
+    }
+
     // Move fails if window would be only partially visible at destination, so
     // resizing should be performed first.
     if (wresize(w(ptr), newSize.lines, newSize.cols) != OK) {
@@ -128,6 +133,12 @@ Window::print(const ColorTree &colored)
     });
 }
 
+bool
+Window::isHidden() const
+{
+    return hidden;
+}
+
 
 void
 (guts::keypad)(Window &win, bool bf)
@@ -138,7 +149,9 @@ void
 void
 (guts::wnoutrefresh)(Window &win)
 {
-    wnoutrefresh(w(win.raw()));
+    if (!win.isHidden()) {
+        wnoutrefresh(w(win.raw()));
+    }
 }
 
 void

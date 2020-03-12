@@ -60,9 +60,13 @@ public:
     // Prints colored text on the window at the current cursor position.
     void print(const ColorTree &colored);
 
+    // Checks whether this window is hidden and shouldn't be drawn.
+    bool isHidden() const;
+
 private:
-    void *ptr; // Opaque pointer to the resource.
-    Format bg; // Background/default format of the window.
+    void *ptr;   // Opaque pointer to the resource.
+    Format bg;   // Background/default format of the window.
+    bool hidden; // Whether it's a hidden (resized to zero area).
 };
 
 // Sets a window flag that defines whether functional keys are recognized as
