@@ -18,6 +18,7 @@
 
 #include "Label.hpp"
 
+#include <algorithm>
 #include <utility>
 
 #include "ColorTree.hpp"
@@ -43,7 +44,7 @@ Label::computeWidth()
     text.visit([&newWidth](const std::wstring &text, const Format &/*format*/) {
         newWidth += text.length();
     });
-    width = newWidth;
+    width = std::max(1, newWidth);
 }
 
 void
