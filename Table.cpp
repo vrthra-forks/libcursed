@@ -63,6 +63,12 @@ public:
         return truncate(heading);
     }
 
+    // Clears the column.
+    void clear()
+    {
+        values.clear();
+    }
+
     // Adds a value to the column.
     void append(ColorTree val)
     {
@@ -178,6 +184,10 @@ Table::removeAll()
 void
 Table::fillColumns()
 {
+    for (Column &col : cols) {
+        col.clear();
+    }
+
     for (const std::vector<ColorTree> &item : items) {
         for (Column &col : cols) {
             col.append(item[col.getIdx()]);
