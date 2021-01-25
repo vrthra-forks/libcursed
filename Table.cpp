@@ -170,6 +170,12 @@ Table::append(const std::vector<ColorTree> &item)
 }
 
 void
+Table::removeAll()
+{
+    items.clear();
+}
+
+void
 Table::fillColumns()
 {
     for (const std::vector<ColorTree> &item : items) {

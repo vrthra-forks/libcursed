@@ -62,6 +62,8 @@ public:
     // Adds a row.  Throws std::invalid_argument if item length doesn't match
     // columns.
     void append(const std::vector<ColorTree> &item);
+    // Removes all rows.
+    void removeAll();
 
 private:
     // Populates columns with items' data.
