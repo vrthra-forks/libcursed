@@ -24,7 +24,7 @@
 using namespace cursed;
 using namespace cursed::guts;
 
-static std::vector<int> doLayout(const std::vector<int> &lengths, int max);
+static std::vector<int> doLayout(std::vector<int> lengths, int max);
 static int calculateDesired(const std::vector<int> &lengths);
 
 // Boundary to narrow range of values to avoid integer overflows.
@@ -88,15 +88,22 @@ Track::placeHorizontally(Pos newPos, Size newSize)
 // Performs distribution of `max` units among widgets that want specified
 // lengths.
 static std::vector<int>
-doLayout(const std::vector<int> &lengths, int max)
+doLayout(std::vector<int> lengths, int max)
 {
     int nFlexible = 0;
+    int nFillers = 0;
     int booked = 0;
 
     std::vector<int> layout;
     int lengthLeft = max;
 
-    auto getBooked = [](int len) { return (len <= -Range ? 1 : -len); };
+    auto getBooked = [&nFillers](int len) {
+        if (len <= -Range) {
+            ++nFillers;
+            return 1;
+        }
+        return -len;
+    };
 
     for (int length : lengths) {
         length = std::max(std::min(length, Range), -Range);
@@ -126,6 +133,26 @@ doLayout(const std::vector<int> &lengths, int max)
             }
         }
         return layout;
+    }
+
+    if (nFillers > 0) {
+        int slice = (lengthLeft - booked)/nFillers;
+        for (unsigned int i = 0U; i < lengths.size(); ++i) {
+            if (lengths[i] <= -Range) {
+                --nFillers;
+                --nFlexible;
+
+                if (nFillers == 0) {
+                    layout[i] = lengthLeft - booked;
+                    lengthLeft = booked;
+                } else {
+                    layout[i] = slice + 1;
+                    lengthLeft -= slice;
+                }
+
+                lengths[i] = 0;
+            }
+        }
     }
 
     // Place flexible items giving them share of extra space.
