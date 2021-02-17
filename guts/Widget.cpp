@@ -23,13 +23,24 @@
 
 using cursed::guts::Widget;
 
+Widget::Widget() : hasFixedSize(false)
+{ }
+
+void
+Widget::setFixedSize(int colsNum, int linesNum)
+{
+    hasFixedSize = true;
+    cols = colsNum;
+    lines = linesNum;
+}
+
 int
 Widget::getDesiredHeight()
-{ return desiredHeight(); }
+{ return (hasFixedSize ? lines : desiredHeight()); }
 
 int
 Widget::getDesiredWidth()
-{ return desiredWidth(); }
+{ return (hasFixedSize ? cols : desiredWidth()); }
 
 void
 Widget::place(Pos newPos, Size newSize)

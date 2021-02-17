@@ -27,6 +27,10 @@ class Size;
 // Base class for all widgets in the library.
 class Widget
 {
+public:
+    // Initializes widget with flexible size.
+    Widget();
+
 protected:
     // No base class destruction.
     ~Widget() = default;
@@ -37,6 +41,10 @@ public:
     virtual void place(Pos newPos, Size newSize);
     // Updates state of this widget to be published on the screen.
     virtual void draw() = 0;
+
+    // Sets fixed size for the widget.  `desired*()` are not called for
+    // fixed-size widgets.
+    void setFixedSize(int colsNum, int linesNum);
 
     // Retrieves vertical size policy.
     // Positive number or zero means exactly that much.
@@ -59,6 +67,11 @@ private:
 
     // Notifies widget of new position and size.
     virtual void placed(Pos newPos, Size newSize);
+
+private:
+    bool hasFixedSize; // Whether size is fixed.
+    int cols;          // Columns for the fixed size.
+    int lines;         // Lines for the fixed size.
 };
 
 } }

@@ -1,6 +1,6 @@
-**libcursed**, _2019 -- 2020_
+**libcursed**, _2019 -- 2021_
 
-_This file last updated on 9 March, 2020_
+_This file last updated on 18 February, 2021_
 
 ### Brief Description ###
 
@@ -128,6 +128,15 @@ other classes and destroying it at the end of use.
 
 Any number of `Screen` and `Input` objects can be created and used at the same
 time.
+
+#### Layout and sizing ####
+
+By default elements request size that's equal or larger than size of their
+content.  This means that several elements in a track will usually have
+approximately equal size.  If there isn't enough space, they'll use the little
+space there is.
+
+`setFixedSize()` method can be used to force specific dimensions for an element.
 
 #### API ####
 
