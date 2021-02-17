@@ -21,6 +21,7 @@
 #include <curses.h>
 
 #include "guts/ColorManager.hpp"
+#include "guts/Pos.hpp"
 #include "guts/Size.hpp"
 #include "guts/Widget.hpp"
 

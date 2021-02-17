@@ -21,6 +21,9 @@
 #include <algorithm>
 #include <vector>
 
+#include "guts/Pos.hpp"
+#include "guts/Size.hpp"
+
 using namespace cursed;
 using namespace cursed::guts;
 

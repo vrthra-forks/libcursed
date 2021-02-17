@@ -19,10 +19,10 @@
 #ifndef LIBCURSED__GUTS__WIDGET_HPP__
 #define LIBCURSED__GUTS__WIDGET_HPP__
 
-#include "Pos.hpp"
-#include "Size.hpp"
-
 namespace cursed { namespace guts {
+
+class Pos;
+class Size;
 
 // Base class for all widgets in the library.
 class Widget
@@ -60,22 +60,6 @@ private:
     // Notifies widget of new position and size.
     virtual void placed(Pos newPos, Size newSize);
 };
-
-inline int
-Widget::getDesiredHeight()
-{ return desiredHeight(); }
-
-inline int
-Widget::getDesiredWidth()
-{ return desiredWidth(); }
-
-inline void
-Widget::place(Pos newPos, Size newSize)
-{ placed(newPos, newSize); }
-
-inline void
-Widget::placed(Pos /*newPos*/, Size /*newSize*/)
-{ }
 
 } }
 

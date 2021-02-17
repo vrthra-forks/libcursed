@@ -20,6 +20,9 @@
 
 #include <limits>
 
+#include "guts/Pos.hpp"
+#include "guts/Size.hpp"
+
 using namespace cursed;
 
 Placeholder::Placeholder() : widget(nullptr)
