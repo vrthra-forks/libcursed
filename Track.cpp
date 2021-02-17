@@ -55,7 +55,7 @@ Track::placeVertically(Pos newPos, Size newSize)
     std::vector<int> lengths;
     lengths.reserve(widgets.size());
     for (Widget *w : widgets) {
-        lengths.push_back(w->desiredHeight());
+        lengths.push_back(w->getDesiredHeight());
     }
 
     lengths = doLayout(lengths, newSize.lines);
@@ -73,7 +73,7 @@ Track::placeHorizontally(Pos newPos, Size newSize)
     std::vector<int> lengths;
     lengths.reserve(widgets.size());
     for (Widget *w : widgets) {
-        lengths.push_back(w->desiredWidth());
+        lengths.push_back(w->getDesiredWidth());
     }
 
     lengths = doLayout(lengths, newSize.cols);
@@ -186,7 +186,7 @@ Track::desiredHeight()
     std::vector<int> lengths;
     lengths.reserve(widgets.size());
     for (Widget *w : widgets) {
-        lengths.push_back(w->desiredHeight());
+        lengths.push_back(w->getDesiredHeight());
     }
     return calculateDesired(lengths);
 }
@@ -197,7 +197,7 @@ Track::desiredWidth()
     std::vector<int> lengths;
     lengths.reserve(widgets.size());
     for (Widget *w : widgets) {
-        lengths.push_back(w->desiredWidth());
+        lengths.push_back(w->getDesiredWidth());
     }
     return calculateDesired(lengths);
 }

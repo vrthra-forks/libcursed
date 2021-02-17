@@ -41,16 +41,33 @@ public:
     // Retrieves vertical size policy.
     // Positive number or zero means exactly that much.
     // Negative number means at least that much in magnitude.
+    int getDesiredHeight();
+    // Retrieves horizontal size policy.
+    // Positive number or zero means exactly that much.
+    // Negative number means at least that much in magnitude.
+    int getDesiredWidth();
+
+private:
+    // Retrieves vertical size policy.
+    // Positive number or zero means exactly that much.
+    // Negative number means at least that much in magnitude.
     virtual int desiredHeight() = 0;
     // Retrieves horizontal size policy.
     // Positive number or zero means exactly that much.
     // Negative number means at least that much in magnitude.
     virtual int desiredWidth() = 0;
 
-private:
     // Notifies widget of new position and size.
     virtual void placed(Pos newPos, Size newSize);
 };
+
+inline int
+Widget::getDesiredHeight()
+{ return desiredHeight(); }
+
+inline int
+Widget::getDesiredWidth()
+{ return desiredWidth(); }
 
 inline void
 Widget::place(Pos newPos, Size newSize)

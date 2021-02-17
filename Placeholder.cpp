@@ -43,7 +43,7 @@ int
 Placeholder::desiredHeight()
 {
     if (widget != nullptr) {
-        return widget->desiredHeight();
+        return widget->getDesiredHeight();
     }
     return std::numeric_limits<int>::min();
 }
@@ -52,7 +52,7 @@ int
 Placeholder::desiredWidth()
 {
     if (widget != nullptr) {
-        return widget->desiredWidth();
+        return widget->getDesiredWidth();
     }
     return std::numeric_limits<int>::min();
 }
