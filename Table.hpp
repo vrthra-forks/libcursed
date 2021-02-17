@@ -65,6 +65,9 @@ public:
     // Removes all rows.
     void removeAll();
 
+    // Retrieves number of elements in the list.
+    virtual int getSize() const override;
+
 private:
     // Populates columns with items' data.
     void fillColumns();
@@ -92,9 +95,6 @@ private:
 
     // Notifies widget of new position and size.
     virtual void placed(guts::Pos newPos, guts::Size newSize) override;
-
-    // Retrieves number of elements in the list.
-    virtual int getSize() const override;
 
     // Retrieves viewport height.
     virtual int getHeight() const override;

@@ -50,6 +50,9 @@ public:
     // empty list.
     std::wstring getCurrent() const;
 
+    // Retrieves number of elements in the list.
+    virtual int getSize() const override;
+
 private:
     // Updates state of this widget to be published on the screen.
     virtual void draw() override;
@@ -65,9 +68,6 @@ private:
 
     // Notifies widget of new position and size.
     virtual void placed(guts::Pos newPos, guts::Size newSize) override;
-
-    // Retrieves number of elements in the list.
-    virtual int getSize() const override;
 
     // Retrieves viewport height.
     virtual int getHeight() const override;
