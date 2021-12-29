@@ -40,6 +40,9 @@ public:
     Text & operator=(Text &&rhs) = delete;
 
 public:
+    // Retrieves height.
+    int getHeight() const;
+
     // Assigns list of lines.
     void setLines(std::vector<ColorTree> newLines);
 

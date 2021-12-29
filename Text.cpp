@@ -28,6 +28,10 @@ using namespace cursed::guts;
 Text::Text() : top(0), height(0)
 { }
 
+int
+Text::getHeight() const
+{ return height; }
+
 void
 Text::setLines(std::vector<ColorTree> newLines)
 {
