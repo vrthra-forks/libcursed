@@ -1,6 +1,6 @@
 **libcursed**, _2019 -- 2021_
 
-_This file last updated on 18 February, 2021_
+_This file last updated on 29 December, 2021_
 
 ### Brief Description ###
 
@@ -34,10 +34,16 @@ and can change quite a bit in the future.
 
 #### Throw-in library state ####
 
-There is no build system and nothing is getting built for the client.  To use
-it clone the repository (possibly as a submodule) and handle the building with
-the build system that's used by the main project.  Compile with C++11 enabled
-and link against `cursesw`.
+To use it clone the repository (possibly as a submodule) and handle the building
+with the build system that's used by the main project.  Compile with C++11
+enabled and link against `cursesw`.
+
+Alternatively one can use [xmake][xmake] to consume submodule as a
+subproject (example assumes it's stored under `libs/`):
+```
+add_includedirs("libs")
+includes("libs/*/xmake.lua")
+```
 
 ### Prerequisites ###
 
