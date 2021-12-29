@@ -113,12 +113,12 @@ public:
     { return current; }
 
 private:
-    Format current;            // Current format.
+    Format current;              // Current format.
     std::stack<Format> previous; // Previous formats.
-    std::stack<int> fg;        // Stack of active foreground colors.
-    std::stack<int> bg;        // Stack of active background colors.
-    int boldCounter = 0;       // Count bold attribute was encountered.
-    int underlinedCounter = 0; // Count underline attribute was encountered.
+    std::stack<int> fg;          // Stack of active foreground colors.
+    std::stack<int> bg;          // Stack of active background colors.
+    int boldCounter = 0;         // Count bold attribute was encountered.
+    int underlinedCounter = 0;   // Count underline attribute was encountered.
 };
 
 void
