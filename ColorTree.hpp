@@ -19,6 +19,7 @@
 #ifndef LIBCURSED__COLORTREE_HPP__
 #define LIBCURSED__COLORTREE_HPP__
 
+#include <array>
 #include <functional>
 #include <string>
 #include <vector>
@@ -143,6 +144,10 @@ public:
     // Constructs a leaf node with text specified as a literal.
     template <std::size_t N>
     ColorTree(const wchar_t (&text)[N]) : text(text, text + N - 1)
+    { }
+    // Constructs a leaf node from text specified as `std::array<wchar_t, N>`.
+    template <std::size_t N>
+    ColorTree(const std::array<wchar_t, N> &text) : text(text.data())
     { }
     // Constructs a leaf node with specified text and format.
     ColorTree(std::wstring text, Format format);
