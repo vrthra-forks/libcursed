@@ -291,33 +291,27 @@ ColorTree::append(ColorTree &&branch)
 void
 ColorTree::visit(const visitorFunc &visitor) const
 {
-    std::stack<const ColorTree *> trees;
-    trees.push(this);
+    struct {
+        const visitorFunc &visitor;
+        FormatState formatState;
 
-    std::stack<const Format *> formats;
-    Format fmt;
-    formats.push(&fmt);
+        void visit(const ColorTree &tree)
+        {
+            formatState += tree.format;
 
-    FormatState formatState;
-    while (!trees.empty()) {
-        const ColorTree &tree = *trees.top();
-        trees.pop();
-
-        formatState -= *formats.top();
-        formats.top() = &tree.format;
-        formatState += tree.format;
-
-        if (tree.branches.empty()) {
-            visitor(tree.text, formatState.getCurrent());
-        } else {
-            for (auto it = tree.branches.crbegin();
-                 it != tree.branches.crend();
-                 ++it) {
-                trees.push(&*it);
-                formats.emplace(&fmt);
+            if (tree.branches.empty()) {
+                visitor(tree.text, formatState.getCurrent());
+            } else {
+                for (const ColorTree &branch : tree.branches) {
+                    visit(branch);
+                }
             }
+
+            formatState -= tree.format;
         }
-    }
+    } f = { visitor, {} };
+
+    f.visit(*this);
 }
 
 int
