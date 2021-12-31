@@ -223,3 +223,4 @@ main()
 [cursesxx-post]: https://reversed.top/2016-04-24/ncurses-for-cpp/
 [ndkxx]: http://ndk-xx.sourceforge.net/
 [cursespp]: https://github.com/clangen/cursespp
+[xmake]: https://xmake.io/
