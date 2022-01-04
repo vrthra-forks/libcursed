@@ -44,6 +44,9 @@ private:
     // Updates state of this widget to be published on the screen.
     virtual void draw() override;
 
+    // Moves hardware cursor onto this widget.
+    virtual void updateCursor() override;
+
     // Retrieves vertical size policy.
     // Positive number or zero means exactly that much.
     // Negative number means at least that much in magnitude.

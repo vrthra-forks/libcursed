@@ -39,6 +39,12 @@ Prompt::draw()
     win.erase();
     wmove(win, 0, 0);
     win.print(text);
+    wnoutrefresh(win);
+}
+
+void
+Prompt::updateCursor()
+{
     wmove(win, 0, pos);
     wnoutrefresh(win);
 }

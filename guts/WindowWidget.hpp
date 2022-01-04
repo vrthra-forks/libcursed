@@ -36,6 +36,9 @@ public:
     // with attributes and/or foreground).
     void setBackground(Format format);
 
+    // Moves hardware cursor onto this widget.
+    virtual void updateCursor();
+
 protected:
     // Resizes and moves window.
     virtual void placed(Pos newPos, Size newSize) override;
@@ -43,6 +46,10 @@ protected:
 protected:
     Window win; // Window object.
 };
+
+inline void
+WindowWidget::updateCursor()
+{ }
 
 inline void
 WindowWidget::setBackground(Format format)

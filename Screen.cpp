@@ -24,6 +24,7 @@
 #include "guts/Pos.hpp"
 #include "guts/Size.hpp"
 #include "guts/Widget.hpp"
+#include "guts/WindowWidget.hpp"
 
 using namespace cursed;
 using namespace cursed::guts;
@@ -77,18 +78,25 @@ Screen::draw()
     for (Widget *widget : mainWidgets) {
         widget->draw();
     }
+
+    if (cursorWidget != nullptr) {
+        cursorWidget->updateCursor();
+    }
+
     doupdate();
 }
 
 bool
-Screen::showCursor()
+Screen::showCursor(guts::WindowWidget *w)
 {
+    cursorWidget = w;
     return (curs_set(1) == 0);
 }
 
 bool
 Screen::hideCursor()
 {
+    cursorWidget = nullptr;
     return (curs_set(0) != 0);
 }
 

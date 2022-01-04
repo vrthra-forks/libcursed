@@ -25,6 +25,7 @@ namespace cursed {
 
 namespace guts {
     class Widget;
+    class WindowWidget;
 }
 
 // Provides information about the whole screen.
@@ -45,9 +46,9 @@ public:
     // Draws main widget and makes screen updates visible on physical screen.
     void draw();
 
-    // Makes cursor visible.  Returns `true` if cursor was hidden before the
-    // call.
-    bool showCursor();
+    // Makes cursor visible.  Optionally sets widget that owns the cursor.
+    // Returns `true` if cursor was hidden before the call.
+    bool showCursor(guts::WindowWidget *w = nullptr);
     // Makes cursor invisible.  Returns `true` if cursor was visible before the
     // call.
     bool hideCursor();
@@ -58,6 +59,8 @@ public:
 private:
     // Roots of all currently displayed layers of widgets.
     std::vector<guts::Widget *> mainWidgets;
+    // Widget that has the cursor.
+    guts::WindowWidget *cursorWidget = nullptr;
 };
 
 }
