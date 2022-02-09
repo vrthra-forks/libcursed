@@ -71,15 +71,18 @@ Input::Input(Keypad keypad)
 
     guts::keypad(readWin, keypad == Keypad::Enabled);
     wtimeout(peekWin, 0);
+
+    // `man wget_wch`:
+    //   If the window is not a pad and has been moved or modified since the
+    //   last call to wrefresh, wrefresh will be called before another character
+    //   is read.
+    wnoutrefresh(readWin);
+    wnoutrefresh(peekWin);
 }
 
 InputElement
 Input::read()
 {
-    // Refresh the window, because otherwise curses clears the screen on call to
-    // `wget_wch()` (why does it do this?).
-    wnoutrefresh(readWin);
-
     std::wint_t wch;
     int status = wget_wch(readWin, &wch);
 
