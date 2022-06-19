@@ -73,6 +73,7 @@ void
 Screen::draw()
 {
     werase(stdscr);
+    wnoutrefresh(stdscr);
 
     guts::ColorManager::get().reset();
     for (Widget *widget : mainWidgets) {
