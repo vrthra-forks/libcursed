@@ -78,7 +78,7 @@ w(void *ptr)
 
 Window::Window() : hidden(false)
 {
-    ptr = newwin(0, 0, 0, 0);
+    ptr = newwin(1, 1, 0, 0);
     if (ptr == nullptr) {
         throw std::runtime_error("Failed to create curses window");
     }
