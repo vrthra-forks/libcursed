@@ -1,4 +1,4 @@
-**libcursed**, _2019 -- 2021_
+**libcursed**, _2019 -- 2022_
 
 _This file last updated on 29 December, 2021_
 

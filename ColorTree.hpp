@@ -145,6 +145,9 @@ public:
     template <std::size_t N>
     ColorTree(const wchar_t (&text)[N]) : text(text, text + N - 1)
     { }
+    // Constructs a leaf node with text specified as `wchar_t` array.
+    ColorTree(const wchar_t text[]) : text(text)
+    { }
     // Constructs a leaf node from text specified as `std::array<wchar_t, N>`.
     template <std::size_t N>
     ColorTree(const std::array<wchar_t, N> &text) : text(text.data())
