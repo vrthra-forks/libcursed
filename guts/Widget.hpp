@@ -21,8 +21,8 @@
 
 namespace cursed { namespace guts {
 
-class Pos;
-class Size;
+struct Pos;
+struct Size;
 
 // Base class for all widgets in the library.
 class Widget

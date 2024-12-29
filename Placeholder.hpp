@@ -47,7 +47,7 @@ private:
     virtual int desiredWidth() override;
 
     // Notifies widget of new position and size.
-    virtual void placed(guts::Pos newPos, guts::Size newSize);
+    virtual void placed(guts::Pos newPos, guts::Size newSize) override;
 
 private:
     guts::Widget *widget; // Client widget.

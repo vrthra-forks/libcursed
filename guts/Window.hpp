@@ -25,8 +25,8 @@
 
 namespace cursed { namespace guts {
 
-class Pos;
-class Size;
+struct Pos;
+struct Size;
 
 // Manages window resource.
 class Window
